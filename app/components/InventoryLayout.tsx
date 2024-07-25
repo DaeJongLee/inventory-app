@@ -1,0 +1,299 @@
+'use client'
+
+import React, { useState, useEffect } from 'react';
+import { Search, Info, MapPin } from 'lucide-react';
+import { collection, onSnapshot, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
+import { Item, ItemLocation } from '../types/types';
+import { locations } from '../data/locations';
+import LocationButton from './LocationButton';
+import LocationChangeModal from './LocationChangeModal';
+
+const InventoryLayout = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [displayedItems, setDisplayedItems] = useState<Item[]>([]);
+  const [highlightedLocation, setHighlightedLocation] = useState<ItemLocation | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'items'), (snapshot) => {
+      const newItems = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Item[];
+      setItems(newItems);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setIsLoading(true);
+      const itemsCollection = collection(db, 'items');
+      const snapshot = await getDocs(itemsCollection);
+      const fetchedItems = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name || 'Unknown',
+          location: data.location || {}
+        };
+      });
+      console.log('Fetched Items:', fetchedItems); // 로그 추가
+      setItems(fetchedItems);
+      setIsLoading(false);
+    };
+  
+    fetchItems();
+  }, []);
+  const handleSectionClick = (section: string) => {
+    setSelectedSection(section);
+    const sectionItems = items.filter(item => {
+      const location = item.location;
+      if (typeof location === 'object') {
+        return (
+          location.main?.toLowerCase() === section.toLowerCase() ||
+          location.sub?.toLowerCase() === section.toLowerCase() ||
+          location.final?.toLowerCase() === section.toLowerCase() ||
+          Object.values(location).some(value => 
+            typeof value === 'string' && value.toLowerCase() === section.toLowerCase()
+          )
+        );
+      }
+      return false;
+    });
+    setDisplayedItems(sectionItems);
+    setHighlightedLocation(null);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const searchTerms = searchTerm.toLowerCase().split(' ');
+    const results = items.filter(item => {
+      if (item && typeof item.name === 'string') {
+        const itemName = item.name.toLowerCase();
+        return searchTerms.every(term => itemName.includes(term));
+      }
+      return false;
+    });
+    console.log('Search Results:', results); // 로그 추가
+    setDisplayedItems(results);
+    setSelectedSection(null);
+    if (results.length > 0) {
+      setHighlightedLocation(results[0].location);
+    }
+  };
+  const handleUpdateLocation = (item: Item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleLocationChange = async (itemId: string, newLocation: ItemLocation) => {
+    try {
+      await updateDoc(doc(db, 'items', itemId), { location: newLocation });
+      setIsModalOpen(false);
+      setSelectedItem(null);
+    } catch (error) {
+      console.error("Error updating item location:", error);
+    }
+  };
+
+  const handleDeleteItem = async (itemId: string) => {
+    if (window.confirm('정말로 이 아이템을 삭제하시겠습니까?')) {
+      try {
+        await deleteDoc(doc(db, 'items', itemId));
+      } catch (error) {
+        console.error("Error deleting item:", error);
+      }
+    }
+  };
+
+  const getLocationName = (location: ItemLocation) => {
+    const mainName = locations.find(loc => loc.id === location.main)?.name || location.main;
+    const subName = location.sub ? ` > ${locations.find(loc => loc.id === location.sub)?.name || location.sub}` : '';
+    const finalName = location.final ? ` > ${locations.find(loc => loc.id === location.final)?.name || location.final}` : '';
+    return `${mainName}${subName}${finalName}`;
+  };
+
+  const renderInventoryLayout = () => (
+    <div className="grid grid-cols-3 gap-4">
+      <div className="col-span-3">
+        <h3 className="text-lg font-semibold mb-2">조제실</h3>
+        <div className="grid grid-cols-5 gap-1">
+          <LocationButton id="LC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LC' || highlightedLocation?.sub === 'LC'} />
+          <div></div>
+          <LocationButton id="MA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'MA' || highlightedLocation?.sub === 'MA'} />
+          <LocationButton id="MB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'MB' || highlightedLocation?.sub === 'MB'} />
+          <LocationButton id="RA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RA' || highlightedLocation?.sub === 'RA'} />
+          <LocationButton id="LB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LB' || highlightedLocation?.sub === 'LB'} />
+          <div></div>
+          <div></div>
+          <div></div>
+          <LocationButton id="RB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RB' || highlightedLocation?.sub === 'RB'} />
+          <LocationButton id="LA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LA' || highlightedLocation?.sub === 'LA'} />
+          <LocationButton id="INS" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'INS' || highlightedLocation?.sub === 'INS'} />
+          <div></div>
+          <div></div>
+          <LocationButton id="RC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RC' || highlightedLocation?.sub === 'RC'} />
+        </div>
+      </div>
+      <div className="col-span-3">
+        <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
+        <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-4 gap-1">
+            <LocationButton id="냉장고" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '냉장고'} />
+            <LocationButton id="온장고" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '온장고'} />
+            <LocationButton id="랙" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '랙'} />
+            <LocationButton id="의자밑" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '의자밑'} />
+          </div>
+          <div className="grid grid-cols-3 gap-1">
+            <div className="grid grid-rows-3 gap-1">
+              <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-A'} />
+              <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-B'} />
+              <LocationButton id="Red-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-'} />
+            </div>
+            <div className="grid grid-rows-3 gap-1">
+              <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-A'} />
+              <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-B'} />
+              <LocationButton id="Blue-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-'} />
+            </div>
+            <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Green-'} />
+          </div>
+          <div className="grid grid-cols-8 gap-1">
+            {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(letter => (
+              <div key={letter} className="grid grid-rows-2 gap-1">
+                <LocationButton id={letter} onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === letter} />
+                <LocationButton id={`${letter}-서랍`} onClick={handleSectionClick} isHighlighted={highlightedLocation?.final === `${letter}-서랍`} />
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-3 gap-1">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+              <LocationButton 
+                key={num} 
+                id={`N${num}`} 
+                onClick={handleSectionClick} 
+                isHighlighted={highlightedLocation?.final === `N${num}`} 
+              />
+            ))}
+          </div>
+          <div className="grid grid-cols-7 gap-1">
+            {['DPA', 'DPB', 'DPC', 'DPD', 'DPE', 'DPF', 'DPG'].map(id => (
+              <LocationButton 
+                key={id} 
+                id={id} 
+                onClick={handleSectionClick} 
+                isHighlighted={highlightedLocation?.main === id || highlightedLocation?.sub === id} 
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="col-span-3">
+        <h3 className="text-lg font-semibold mb-2">집하장</h3>
+        <div className="grid grid-cols-4 gap-1">
+          {['SL', 'SM', 'SR', 'SS'].map(id => (
+            <LocationButton 
+              key={id} 
+              id={id} 
+              onClick={handleSectionClick} 
+              isHighlighted={highlightedLocation?.main === id || highlightedLocation?.sub === id} 
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex max-w-6xl mx-auto p-4">
+      <div className="w-1/2 pr-4">
+        <h1 className="text-2xl font-bold mb-4">재고 레이아웃</h1>
+        
+        <form onSubmit={handleSearch} className="mb-4">
+          <div className="flex">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="아이템 검색..."
+              className="flex-grow p-2 border rounded-l"
+            />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r" disabled={isLoading}>
+              {isLoading ? 'Loading...' : <Search size={20} />}
+            </button>
+          </div>
+        </form>
+        
+        {renderInventoryLayout()}
+      </div>
+      
+      <div className="w-1/2 pl-4">
+        <h2 className="text-xl font-bold mb-4">
+          {selectedSection ? `${selectedSection} 아이템 목록` : '검색 결과'}
+        </h2>
+        <ul className="space-y-2">
+          {displayedItems.map((item) => (
+            <li key={item.id} className="flex items-center justify-between p-2 bg-gray-100 rounded">
+              <div>
+                <span className="font-semibold">{item.name}</span>
+                <div className="text-sm text-gray-600 flex items-center mt-1">
+                  <MapPin size={16} className="mr-1" />
+                  <span>{getLocationName(item.location)}</span>
+                </div>
+              </div>
+              <div>
+                <button 
+                  onClick={() => handleUpdateLocation(item)}
+                  className="bg-blue-500 text-white p-1 rounded mr-2"
+                >
+                  위치 변경
+                </button>
+                <button 
+                  onClick={() => handleDeleteItem(item.id)}
+                  className="bg-red-500 text-white p-1 rounded"
+                >
+                  삭제
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+        
+        {selectedSection && (
+  <div className="mt-4 p-4 border rounded">
+    <h3 className="text-lg font-semibold flex items-center">
+      <Info className="mr-2" />
+      {selectedSection} 정보
+    </h3>
+    <p className="mt-2">
+      {locations.find(loc => loc.id.toLowerCase() === selectedSection.toLowerCase())?.name || '정보 없음'}
+    </p>
+    <ul className="mt-2">
+      {displayedItems.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  </div>
+)}
+      </div>
+
+      {isModalOpen && selectedItem && (
+        <LocationChangeModal
+          item={selectedItem}
+          onClose={() => setIsModalOpen(false)}
+          onLocationChange={handleLocationChange}
+          locations={locations}
+        />
+      )}
+    </div>
+  );
+};
+
+export default InventoryLayout;

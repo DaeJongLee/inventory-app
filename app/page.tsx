@@ -1,14 +1,15 @@
-import AddInventoryItem from './components/AddInventoryItem'
-import InventoryList from './components/InventoryList'
+import InventoryLayout from './components/InventoryLayout'
+import ItemForm from './components/ItemForm'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-4xl font-bold mb-8">재고 관리 앱</h1>
-      <div className="w-full max-w-2xl">
-        <AddInventoryItem />
-        <InventoryList />
+    <main className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">재고 관리 앱</h1>
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">새 아이템 추가</h2>
+        <ItemForm />
       </div>
+      <InventoryLayout />
     </main>
   )
 }
