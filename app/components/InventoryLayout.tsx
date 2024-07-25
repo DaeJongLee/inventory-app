@@ -8,6 +8,9 @@ import { Item, ItemLocation } from '../types/types';
 import { locations } from '../data/locations';
 import LocationButton from './LocationButton';
 import LocationChangeModal from './LocationChangeModal';
+import SubLocationModal from './SubLocationModal'; // 새로운 컴포넌트
+
+
 
 const InventoryLayout = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -17,6 +20,8 @@ const InventoryLayout = () => {
   const [highlightedLocation, setHighlightedLocation] = useState<ItemLocation | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [isSubLocationModalOpen, setIsSubLocationModalOpen] = useState(false);
+  const [selectedMainLocation, setSelectedMainLocation] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'items'), (snapshot) => {
@@ -71,7 +76,6 @@ const InventoryLayout = () => {
     setDisplayedItems(sectionItems);
     setHighlightedLocation(null);
   };
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const searchTerms = searchTerm.toLowerCase().split(' ');
@@ -93,7 +97,6 @@ const InventoryLayout = () => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
-
   const handleLocationChange = async (itemId: string, newLocation: ItemLocation) => {
     try {
       await updateDoc(doc(db, 'items', itemId), { location: newLocation });
@@ -103,7 +106,6 @@ const InventoryLayout = () => {
       console.error("Error updating item location:", error);
     }
   };
-
   const handleDeleteItem = async (itemId: string) => {
     if (window.confirm('정말로 이 아이템을 삭제하시겠습니까?')) {
       try {
@@ -113,7 +115,6 @@ const InventoryLayout = () => {
       }
     }
   };
-
   const getLocationName = (location: ItemLocation) => {
     const mainName = locations.find(loc => loc.id === location.main)?.name || location.main;
     const subName = location.sub ? ` > ${locations.find(loc => loc.id === location.sub)?.name || location.sub}` : '';
@@ -121,67 +122,71 @@ const InventoryLayout = () => {
     return `${mainName}${subName}${finalName}`;
   };
 
+  const handleMainLocationClick = (location: string) => {
+    if (location === 'red-' || location === 'blue-') {
+      setSelectedMainLocation(location);
+      setIsSubLocationModalOpen(true);
+    } else {
+      handleSectionClick(location);
+    }
+  };
+
+  const handleSubLocationSelect = (subLocation: string) => {
+    setIsSubLocationModalOpen(false);
+    handleSectionClick(`${selectedMainLocation}${subLocation}`);
+  };
+
   const renderInventoryLayout = () => (
     <div className="grid grid-cols-3 gap-4">
+      {/* 조제실 레이아웃 */}
       <div className="col-span-3">
         <h3 className="text-lg font-semibold mb-2">조제실</h3>
-        <div className="grid grid-cols-5 gap-1">
-          <LocationButton id="LC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LC' || highlightedLocation?.sub === 'LC'} />
+        <div className="grid grid-cols-4 gap-1">
+          {/* 조제실 4열 횡대*/}
           <div></div>
           <LocationButton id="MA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'MA' || highlightedLocation?.sub === 'MA'} />
           <LocationButton id="MB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'MB' || highlightedLocation?.sub === 'MB'} />
+          <div></div>
+          {/* 1열 */}
+          <LocationButton id="LC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LC' || highlightedLocation?.sub === 'LC'} />
+          <div></div>
+          <div></div>
           <LocationButton id="RA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RA' || highlightedLocation?.sub === 'RA'} />
+          {/* 2열 */}
           <LocationButton id="LB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LB' || highlightedLocation?.sub === 'LB'} />
-          <div></div>
-          <div></div>
+          <LocationButton id="INS" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'INS' || highlightedLocation?.sub === 'INS'} />
           <div></div>
           <LocationButton id="RB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RB' || highlightedLocation?.sub === 'RB'} />
           <LocationButton id="LA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LA' || highlightedLocation?.sub === 'LA'} />
-          <LocationButton id="INS" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'INS' || highlightedLocation?.sub === 'INS'} />
-          <div></div>
+          <LocationButton id="N (0-9)" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'N (0-9)' || highlightedLocation?.sub === 'N (0-9)'} />
           <div></div>
           <LocationButton id="RC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RC' || highlightedLocation?.sub === 'RC'} />
+          {/* 3열 */}
         </div>
       </div>
+      {/* 판매 구역 레이아웃 */}
       <div className="col-span-3">
         <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
         <div className="grid grid-cols-1 gap-2">
-          <div className="grid grid-cols-4 gap-1">
+          <div className="grid grid-cols-5 gap-1">
             <LocationButton id="냉장고" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '냉장고'} />
             <LocationButton id="온장고" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '온장고'} />
             <LocationButton id="랙" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '랙'} />
             <LocationButton id="의자밑" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '의자밑'} />
+            <LocationButton id="밴드매대" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '밴드매대'} />
           </div>
           <div className="grid grid-cols-3 gap-1">
             <div className="grid grid-rows-3 gap-1">
               <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-A'} />
               <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-B'} />
-              <LocationButton id="Red-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-'} />
+              <LocationButton id="red-" onClick={() => handleMainLocationClick('red-')} isHighlighted={highlightedLocation?.sub === 'red-'} />
             </div>
             <div className="grid grid-rows-3 gap-1">
               <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-A'} />
               <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-B'} />
-              <LocationButton id="Blue-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-'} />
+              <LocationButton id="blue-" onClick={() => handleMainLocationClick('blue-')} isHighlighted={highlightedLocation?.sub === 'blue-'} />
             </div>
             <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Green-'} />
-          </div>
-          <div className="grid grid-cols-8 gap-1">
-            {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(letter => (
-              <div key={letter} className="grid grid-rows-2 gap-1">
-                <LocationButton id={letter} onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === letter} />
-                <LocationButton id={`${letter}-서랍`} onClick={handleSectionClick} isHighlighted={highlightedLocation?.final === `${letter}-서랍`} />
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-3 gap-1">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-              <LocationButton 
-                key={num} 
-                id={`N${num}`} 
-                onClick={handleSectionClick} 
-                isHighlighted={highlightedLocation?.final === `N${num}`} 
-              />
-            ))}
           </div>
           <div className="grid grid-cols-7 gap-1">
             {['DPA', 'DPB', 'DPC', 'DPD', 'DPE', 'DPF', 'DPG'].map(id => (
@@ -195,9 +200,10 @@ const InventoryLayout = () => {
           </div>
         </div>
       </div>
+      {/* 집하장 레이아웃 */}
       <div className="col-span-3">
         <h3 className="text-lg font-semibold mb-2">집하장</h3>
-        <div className="grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-3 gap-1">
           {['SL', 'SM', 'SR', 'SS'].map(id => (
             <LocationButton 
               key={id} 
@@ -210,6 +216,7 @@ const InventoryLayout = () => {
       </div>
     </div>
   );
+
 
   return (
     <div className="flex max-w-6xl mx-auto p-4">
@@ -226,7 +233,7 @@ const InventoryLayout = () => {
               className="flex-grow p-2 border rounded-l"
             />
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-r" disabled={isLoading}>
-              {isLoading ? 'Loading...' : <Search size={20} />}
+            {isLoading ? 'Loading...' : <Search size={20} />}
             </button>
           </div>
         </form>
@@ -290,6 +297,13 @@ const InventoryLayout = () => {
           onClose={() => setIsModalOpen(false)}
           onLocationChange={handleLocationChange}
           locations={locations}
+        />
+      )}
+{isSubLocationModalOpen && (
+        <SubLocationModal
+          mainLocation={selectedMainLocation}
+          onSelect={handleSubLocationSelect}
+          onClose={() => setIsSubLocationModalOpen(false)}
         />
       )}
     </div>

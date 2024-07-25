@@ -1,0 +1,5002 @@
+[
+  {
+    "name": "용각산 쿨 민트",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LA"
+    }
+  },
+  {
+    "name": "용각산 쿨 복숭아",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LA"
+    }
+  },
+  {
+    "name": "에세푸릴",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LB"
+    }
+  },
+  {
+    "name": "인팩신",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LB"
+    }
+  },
+  {
+    "name": "파이에온",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LB"
+    }
+  },
+  {
+    "name": "로페리",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LB"
+    }
+  },
+  {
+    "name": "엔디팬",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LB"
+    }
+  },
+  {
+    "name": "포박신",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LB"
+    }
+  },
+  {
+    "name": "나프록센",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LC"
+    }
+  },
+  {
+    "name": "해농정",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LC"
+    }
+  },
+  {
+    "name": "트립라인",
+    "location": {
+      "main": "조제실",
+      "sub": "L",
+      "final": "LC"
+    }
+  },
+  {
+    "name": "더마쎄지",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "디판테놀",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "더마큐",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "위스콘",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "나오덤",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "클리톡",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "나프젠크림",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "나프젠액",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "비판텐",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "비아핀",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "모글원큐",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "푸레파인",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "반테린 ex크림",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "알보칠",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "쎄레스톤지",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "립톡케어",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "라미실 원스",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "라미실 크림",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "노스카나",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "애크논",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "애크린",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "바시락",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "오라메디",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "오트리빈",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "노즈원큐 멘톨",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "노즈원큐 무향",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "마데카솔",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "후시딘",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "풀믹신",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "스티모린",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "아프타치",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "티트로신",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MA"
+    }
+  },
+  {
+    "name": "겔포스",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "탁센",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "캐롤비노즈",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "이지엔스트롱",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "타이레놀이알",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "이지엔애니",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "덱스원큐",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "타이레놀 우먼스",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "타이레놀 콜드",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "어린이 타이레놀",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "게보린",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "타이레놀산 성인",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "타이레놀산 어린이",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "챔프노즈",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "챔프 이부펜",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "챔프 아세트",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "챔프 코프",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "다제스 10",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "훼스탈",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "닥터베아제",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "타이레놀 500",
+    "location": {
+      "main": "조제실",
+      "sub": "M",
+      "final": "MB"
+    }
+  },
+  {
+    "name": "네프신",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RA"
+    }
+  },
+  {
+    "name": "안심액",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RA"
+    }
+  },
+  {
+    "name": "옥미인단",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RA"
+    }
+  },
+  {
+    "name": "러지엔톡",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "시그널 q 임신테스터",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "대웅 얼리테스터",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "큐어반 폼잘라",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "콜대원 종합",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "콜대원 코",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "콜대원 목",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "콜대원 키즈 아세트",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "콜대원 키즈 이부",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "멸균거즈 소",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "멸균거즈 중",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "멸균거즈 대",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "거즈붕대",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "압방붕대 소",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "압방붕대 중",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "압방붕대 대",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "핀셋",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "가위",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "디어미정",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "라니아",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "미니보라",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "센스데이",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "머시론",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "정로환에프",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "니코틴껌",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "세노바액",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "마이보라",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "칼라민",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "베이비파우더",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "면반창고",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "폼포미 4매",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "니코틴패치",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "니코스탑",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "엑티피드",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "부루펜",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "오라퀵",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "에탄올",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "폼포미플러스 스팟",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RB"
+    }
+  },
+  {
+    "name": "콜대원 종합",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "멸균거즈 소",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "멸균거즈 중",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "멸균거즈 대",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "개비스콘 12",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "개비스콘 4",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "핵사메딘",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "물린디",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "신신아렉스로션",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "클리덴트",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "개비스콘 12",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "개비스콘 4",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "우루사 1정",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "솔트액",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "안티푸라민 에스로션",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "멸균면봉",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "RU21",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "노스엣센스",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "노스엣",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "데오클렌",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "드리클로",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "관장약",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "포비돈",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "포비돈 스틱",
+    "location": {
+      "main": "조제실",
+      "sub": "R",
+      "final": "RC"
+    }
+  },
+  {
+    "name": "에키나포스",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "스트랩실",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "덴드로프쿨",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "알미틴플러스",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "로토아쿠아",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "로토지파이",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "애드빌",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "나조린",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "이지엔 이브 30",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "이지엔 프로 30",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "리포직",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "아이필",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "아이드롭",
+    "location": {
+      "main": "조제실",
+      "sub": "INS",
+      "final": "INS"
+    }
+  },
+  {
+    "name": "캐롤비콜드",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "까스앤프리",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "파베린",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "탁센레이디",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "나프록센나트륨",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "아세틸캡슐",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "이덴큐",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "코트리나",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "이브원큐",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "트리엘",
+    "location": {
+      "main": "조제실",
+      "sub": "N (0-9)",
+      "final": "N (0-9)"
+    }
+  },
+  {
+    "name": "반테린보호대",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "생강쌍화",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "에스톰",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "베나치오",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "익수갈근탕",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "코프락",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "노즈락",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "오큐시스",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "캐롤쿨링더블파워",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "에폴민",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "디나펜플라스타",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "탁센30",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "탁센10",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "치위환",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "이바프텐",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "디나펜카타플라스마",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SL"
+    }
+  },
+  {
+    "name": "한방수",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "장통환",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "향성파적환",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "패독산",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "소청룡탕",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "맥문동탕",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "캐롤온감더블파워",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "테라플루데이",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "치감",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "갈근탕가천궁신이",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "반하사심탕",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "엔디펜",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "루핑",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "박카스젤리",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "신신물파스",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "테라플루콜드엔코프데이",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SM"
+    }
+  },
+  {
+    "name": "리버타인",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "파베린",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "메가바이",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "잇치",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "센타민프로",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "마이녹실 5%",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "디스밴드",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "메타인",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "보나링츄어블",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "나프젠크림",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "비오킬",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "열냉각시트",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "오네론",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "노보민",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "소보민",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "알나졸",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "헤마멜즈산",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "하루력",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "테라플루나이트",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "비맥스메타비",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "비맥스메타정",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "테라플루콜드엔코프데이",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "테라플루콜드엔코프나이트",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "아라비정",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "플라도반",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "뉴베인",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "신신티눈밴드밴드형",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "비맥스제트",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "우주안대",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "인팩타민프리미엄",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "아로나민골드",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "아로나민골드프리미엄",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "버물리에스액",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "한풍올가",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "에어캅마스크",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "헤포콤",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "아쿠아가드액",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "아렉스마일드",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "뽀로로비타민 C",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "에어캅마스크흰",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "에어캅마스크검",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "세노바퀵",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "일동리얼아르기닌",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "한풍당수롱연조엑스",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "트로겐",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "헤토마신",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "파워포텐",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SR"
+    }
+  },
+  {
+    "name": "리버350",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "인팩신",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "애시컨",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "원광우황청심원",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "코트리나",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "가네원",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "마스크",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "비백큐",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "이브원큐",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SD"
+    }
+  },
+  {
+    "name": "디나펜플라스타",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SS"
+    }
+  },
+  {
+    "name": "아렉스 파스",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SS"
+    }
+  },
+  {
+    "name": "마그라민트리플엑션",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SS"
+    }
+  },
+  {
+    "name": "엠지맥스플러스비",
+    "location": {
+      "main": "집하장",
+      "sub": "S",
+      "final": "SS"
+    }
+  },
+  {
+    "name": "니들샷",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "신신에어파스f",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "3m 키네시올로지테이프",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "3m 키네시올로지테이프",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "푸른주스",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "용각산쿨",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "WoW생리대대형",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "WoW생리대중형",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "잡스킬 바퀴",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "잡스킬 모기",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "카베진",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "아렉스 마일드",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "아렉스파스",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "이프로탑",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "랙"
+    }
+  },
+  {
+    "name": "원탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "맥시롱",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "경방쌍화탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "평위천",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "판콜",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "헛개파워",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "판피린",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "의자밑"
+    }
+  },
+  {
+    "name": "이지덤퀵카밍",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "이지덤뷰티",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "올리렉스 캔디",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "목청도라지",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "로얄프로폴리스캔디",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "인텐시브풋케어",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "유리아쥬방수크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "유리아쥬베리어덤피셔스틱",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 방수M20",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 방수L",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 방수S",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 방수손끝",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 라이언",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 어피치",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 M 10",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 M 20",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 M 50",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 S",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 L",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 혼합",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 도트",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 아카기래",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 발디꿈치",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "케어리브 손끝",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "쾌변",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "레스타민크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "ok 동전패치",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "바세린",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "자가점착밴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "자가점착밴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "자가점착밴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "루크락 방수밴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "루크락 방수밴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "뽀로로 뮤직스타",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "뽀로로 키움비타",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "크린클",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "크린클",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "밴드매대"
+    }
+  },
+  {
+    "name": "미녹시딜5%외용액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "미녹시딜3%외용액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "마이녹실5%외용액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "마이녹실3%외용액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "훼라민Q",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "복합우루사",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "광동우황청심원환",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "광동우황청심원현탁액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "단자민",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "대웅우루사연질캡슐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "원광청심원액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "스웨트롤",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "치센",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "판시딜",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "푸레파인",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "크린클",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "로게인폼",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "덴드로프쿨",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "더마틱스울트라15g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "쿨드림",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "안심액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "아로나민골드",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "아로나민골드프리미엄",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "케롤나이트",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPA"
+    }
+  },
+  {
+    "name": "D판테놀",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노스엣센스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노스엣",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "데오클렌",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "드리클로",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노즈원큐 스프레이",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "두피나",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "더마큐연고",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "더마쎄지",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노블루겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "클리톡",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "스카덤클리어겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "리도맥스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "에스로반",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "비아핀",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "나오덤",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "리큐번",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "하이맘번",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "푸레파인마일드좌제",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "한풍자운고",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "클리마졸 질정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "카네스텐질정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "원케어네일라카",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "유리아크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "케토코나졸",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "엘린플러스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "무조무알파",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "나프젠크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "나프젠액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "라미실원스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "터비뉴원스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "라미실크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노블루겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "파인스겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "반테린 ex코와크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "에이리스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "라니아",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "라미실원스4g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "라미실크림 1% 15g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "머시론",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "디어미순",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "해피타임얼리체크",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "해피타임플러스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "오트리빈",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노즈원큐멘솔",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "시그널큐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "센스리베",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "해피타임플러스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "오트리빈",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "노즈원큐멘솔",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "시그널큐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "마이보라",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "센스데이",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "미니보라30",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "멜리안",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "쎄레스톤지크림15g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "쎄레스톤지크림30g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "비판텐 30g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "비판텐100g",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPB"
+    }
+  },
+  {
+    "name": "가네원",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "메코이에프정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "비맥스메타비",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "비맥스메타정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "비맥스제트",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "센타민프로정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "유한비타민 C 1000",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "센시아정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "해농정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "브로모타제",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "펜잘큐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "게보린",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "네프신",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "한풍 올가에스 과립",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "타이레놀산 160",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "타이레놀산 500",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "청통엑스과립",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "케롤에프",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "케롤나이트",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "알레그라",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "어린이부루펜시럽",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "어린이 타이렌놀현탁액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "세노바액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "액티피드시럽",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "부스코판당의정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "부스코판플러스정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "생장환",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "정로환에프정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "정로환",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "장통환",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "스타빅",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "에세푸릴",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "로페리",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "파이에온",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "애시컨",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "시노타딘",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "둘코락스 20정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "둘코락스 좌제",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "위드원엘 과립",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 코프큐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 노즈큐에스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 콜드큐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "챔프 노즈",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "챔프 코프",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "챔프 아세트아미노펜",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "챔프 이부펜",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 키즈 콜드",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 키즈 코프",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 키즈 노즈",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 키즈 펜",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "콜대원 키즈 이부펜",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPC"
+    }
+  },
+  {
+    "name": "뉴베인",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "게보린정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "겔포스엘 6포",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "다제스캡슐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "덱스원큐S",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "닥터베아제정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "꼬마활명수(5입)",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "미인활명수액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "사리돈에이정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "나프록센나트륨",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "탁센레이디",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "이덴큐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "탁센",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "탁센30",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "사리돈",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "디클로닉",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "파자임",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "트리엘정",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "스토마제",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "다제스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "다제스30",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "아스톰액",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "알미틴 플러스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "위스콘",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "겔포스엘",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "꼬마활명수",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "베나치오소",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "미인활명수",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "평위천",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "베나치오대",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "맥시롱",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "노루모",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "닥터베아제",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "베아제",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "훼스탈플러스",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPD"
+    }
+  },
+  {
+    "name": "화이트저분자 피쉬콜라겐",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPE"
+    }
+  },
+  {
+    "name": "훼리너프",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "에어캅황사방역마스크",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPG"
+    }
+  },
+  {
+    "name": "워터락방수밴드손끝용",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPG"
+    }
+  },
+  {
+    "name": "손가락골무",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPG"
+    }
+  },
+  {
+    "name": "메디터치 번프로텍션 1매",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "메디터치 번프로텍션 3매",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "아이봉 c",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "아이봉 w",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "우주안대",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "하이맘번",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "수면안대",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "열냉각시트",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "홈매트",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "허브컬러크림",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "보령비접촉체온계",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "노즈큐어",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "노즈큐어과립",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "테가덤",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "코메도리무버",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "마우스스프레이",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "메디터치번",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "메디터치번프로텍션",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "메디터치번프로텍션소형3매",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "마그란 리퀴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "마우스스프레이민트",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "보령비접촉체온계(프리미엄)",
+    "location": {
+      "main": "판매구역",
+      "sub": "DP",
+      "final": "DPF"
+    }
+  },
+  {
+    "name": "냉장 보관 구역",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "보생원액",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "박카스",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "여명808",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "비타500로열폴리스",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "반하사심탕과립",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "웅기보",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "자황",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "리버타인",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "벤포파워Z",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "플라도반",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "헛개파워",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "헤포콤",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "리얼아르기닌",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "냉장고"
+    }
+  },
+  {
+    "name": "온장 보관 구역",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "갈근탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "쌍화탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "코프락",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "노즈락",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "원탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "하루력",
+    "location": {
+      "main": "판매구역",
+      "sub": "그외",
+      "final": "온장고"
+    }
+  },
+  {
+    "name": "포박신",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "엔디펜",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "타이레놀",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "타이레놀콜드",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "타이레놀우먼스",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "타이레놀30",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "타이레놀이알",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 스트롱",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 애니",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 이브",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 이브",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 이브 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 이브 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 프로",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 프로",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 프로 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-a"
+    }
+  },
+  {
+    "name": "이지엔 프로 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "옥미인단",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "맥기 엑스 과립",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "소청룡탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "갈근탕가천궁신이",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "반하후박탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "치감",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "청폐탕",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "향성파적환",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "패독산",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "미네르바",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red-b"
+    }
+  },
+  {
+    "name": "아프타치",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "립톡케어",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "바시락",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "스티모린",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "티트로신겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "에키나포스 10",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "후시딘 10",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "후시딘 5",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔 10",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔 6",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "풀믹신",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "페리덱스",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔분말10g",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔분말30g",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔케어연고 10g 대형",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "마데카솔케어연고 6g 소형",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "후시딘겔",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.1"
+    }
+  },
+  {
+    "name": "5301",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "5330",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "5331",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "5300",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "거즈붕대",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "멸균거즈 소",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "멸균거즈 중",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "멸균거즈 대",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "자가점착 밴드",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.2"
+    }
+  },
+  {
+    "name": "밴드이명래고약",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "워터락 l",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "워터락 M",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "아쿠아프리",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "이명래고약",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "케어리브 L",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "케어리브 관절",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "케어리브 발뒤꿈치",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "폼포미 4매",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "큐어반 폼잘라",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "듀오덤",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "스킨가드플러스",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.3"
+    }
+  },
+  {
+    "name": "봉투",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.4"
+    }
+  },
+  {
+    "name": "판피린",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.5"
+    }
+  },
+  {
+    "name": "판콜",
+    "location": {
+      "main": "판매구역",
+      "sub": "red",
+      "final": "red.5"
+    }
+  },
+  {
+    "name": "바세린  큰",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "바세린 작은",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "드레싱밴드(XL)3매",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "드레싱밴드(중)",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "버물리 플라스타",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "버물리 플라스타 미니",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "잡스 모기",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "잡스 바퀴",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "드레싱 S",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "드레싱 M",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "드레싱 L",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "드레싱 XL",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "코로나 키트",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "가습마스크",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "테라플루",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "오네론",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "이바프텐",
+    "location": {
+      "main": "판매구역",
+      "sub": "green",
+      "final": "green"
+    }
+  },
+  {
+    "name": "타이레놀 500 10",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "타이레놀 500 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 이브",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 이브 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 프로",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "이지엔 프로 30",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-a"
+    }
+  },
+  {
+    "name": "보나링",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "노보민",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "메카인",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "RU-21",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "소보민",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "알나졸",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "알비정",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "뉴베인",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "티눈밴드 발가락",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "티눈밴드 발바닥",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue-b"
+    }
+  },
+  {
+    "name": "안티푸라민 더블파워",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue.1"
+    }
+  },
+  {
+    "name": "안티푸라민 쿨파워",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue.1"
+    }
+  },
+  {
+    "name": "하루온팩",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue.2"
+    }
+  },
+  {
+    "name": "쑥찜팩",
+    "location": {
+      "main": "판매구역",
+      "sub": "blue",
+      "final": "blue.2"
+    }
+  }
+]
