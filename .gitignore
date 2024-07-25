@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 node_modules
 .next
-out
+outscripts/serviceAccountKey.json
