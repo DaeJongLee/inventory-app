@@ -1,81 +1,62 @@
-'use client'
+import React, { useState, useEffect } from 'react';
+import { CheckSquare, Square } from 'lucide-react';
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { doc, updateDoc, deleteDoc } from 'firebase/firestore'
-import { db } from '../firebase'
-
-interface InventoryItemProps {
-  id: string;
-  name: string;
-  quantity: number;
-  imageUrl: string;
+interface InventoryItemStatusProps {
+  itemId: string;
+  initialLowStock?: boolean;
+  initialOrderPlaced?: boolean;
 }
 
-export default function InventoryItem({ id, name, quantity, imageUrl }: InventoryItemProps) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [editName, setEditName] = useState(name)
-  const [editQuantity, setEditQuantity] = useState(quantity)
+const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({ itemId, initialLowStock = false, initialOrderPlaced = false }) => {
+  const [lowStock, setLowStock] = useState(initialLowStock);
+  const [orderPlaced, setOrderPlaced] = useState(initialOrderPlaced);
+  const [lowStockTime, setLowStockTime] = useState<string | null>(null);
+  const [orderPlacedTime, setOrderPlacedTime] = useState<string | null>(null);
 
-  const handleUpdate = async () => {
-    try {
-      await updateDoc(doc(db, 'inventory', id), {
-        name: editName,
-        quantity: editQuantity
-      })
-      setIsEditing(false)
-    } catch (error) {
-      console.error('Error updating item:', error)
-    }
-  }
+  useEffect(() => {
+    // Here you would typically fetch the initial state from a database
+    // For now, we'll just use the props
+    if (initialLowStock) setLowStockTime(getCurrentTime());
+    if (initialOrderPlaced) setOrderPlacedTime(getCurrentTime());
+  }, [initialLowStock, initialOrderPlaced]);
 
-  const handleDelete = async () => {
-    if (window.confirm('정말로 이 항목을 삭제하시겠습니까?')) {
-      try {
-        await deleteDoc(doc(db, 'inventory', id))
-      } catch (error) {
-        console.error('Error deleting item:', error)
-      }
-    }
-  }
+  const getCurrentTime = () => {
+    const now = new Date();
+    return `${now.getFullYear().toString().substr(-2)}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+  };
 
-  if (isEditing) {
-    return (
-      <div className="border p-4 rounded-lg">
-        <input
-          type="text"
-          value={editName}
-          onChange={(e) => setEditName(e.target.value)}
-          className="mb-2 p-1 border rounded w-full"
-        />
-        <input
-          type="number"
-          value={editQuantity}
-          onChange={(e) => setEditQuantity(Number(e.target.value))}
-          className="mb-2 p-1 border rounded w-full"
-        />
-        <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded mr-2">저장</button>
-        <button onClick={() => setIsEditing(false)} className="bg-gray-500 text-white p-2 rounded">취소</button>
-      </div>
-    )
-  }
+  const handleLowStockChange = () => {
+    const newLowStock = !lowStock;
+    setLowStock(newLowStock);
+    setLowStockTime(newLowStock ? getCurrentTime() : null);
+    // Here you would typically update the database
+  };
+
+  const handleOrderPlacedChange = () => {
+    const newOrderPlaced = !orderPlaced;
+    setOrderPlaced(newOrderPlaced);
+    setOrderPlacedTime(newOrderPlaced ? getCurrentTime() : null);
+    // Here you would typically update the database
+  };
 
   return (
-    <div className="border p-4 rounded-lg">
-      <div className="relative w-32 h-32 mb-2">
-        <Image 
-          src={imageUrl} 
-          alt={name} 
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          style={{ objectFit: 'cover' }}
-          className="rounded-lg"
-        />
+    <div className="flex flex-col space-y-2">
+      <div className="flex items-center space-x-2">
+        <button onClick={handleLowStockChange} className="flex items-center">
+          {lowStock ? <CheckSquare className="text-red-500" /> : <Square />}
+          <span className="ml-1">부족</span>
+        </button>
+        {lowStockTime && <span className="text-xs text-gray-500">{lowStockTime}</span>}
       </div>
-      <h3 className="text-lg font-semibold">{name}</h3>
-      <p>수량: {quantity}</p>
-      <button onClick={() => setIsEditing(true)} className="bg-yellow-500 text-white p-2 rounded mr-2 mt-2">수정</button>
-      <button onClick={handleDelete} className="bg-red-500 text-white p-2 rounded mt-2">Delete</button>
+      <div className="flex items-center space-x-2">
+        <button onClick={handleOrderPlacedChange} className="flex items-center">
+          {orderPlaced ? <CheckSquare className="text-green-500" /> : <Square />}
+          <span className="ml-1">주문완료</span>
+        </button>
+        {orderPlacedTime && <span className="text-xs text-gray-500">{orderPlacedTime}</span>}
+      </div>
     </div>
-  )
-}
+  );
+};
+
+export default InventoryItemStatus;

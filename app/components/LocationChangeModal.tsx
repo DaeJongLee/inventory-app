@@ -21,9 +21,21 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
   };
 
   const getLocationName = (location: ItemLocation) => {
-    const mainName = locations.find(loc => loc.id === location.main)?.name || location.main;
-    const subName = location.sub ? ` > ${locations.find(loc => loc.id === location.sub)?.name || location.sub}` : '';
-    const finalName = location.final ? ` > ${locations.find(loc => loc.id === location.final)?.name || location.final}` : '';
+    const mainLoc = locations.find(loc => loc.id === location.main);
+    const mainName = mainLoc?.name || location.main;
+    let subName = '';
+    let finalName = '';
+
+    if (mainLoc && mainLoc.children) {
+      const subLoc = mainLoc.children.find(loc => loc.id === location.sub);
+      subName = subLoc ? ` > ${subLoc.name}` : '';
+
+      if (subLoc && subLoc.children) {
+        const finalLoc = subLoc.children.find(loc => loc.id === location.final);
+        finalName = finalLoc ? ` > ${finalLoc.name}` : '';
+      }
+    }
+
     return `${mainName}${subName}${finalName}`;
   };
 
@@ -43,25 +55,25 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
               <option key={loc.id} value={loc.id}>{loc.name}</option>
             ))}
           </select>
-          {newLocation.main && (
+          {newLocation.main && locations.find(loc => loc.id === newLocation.main)?.children && (
             <select
               value={newLocation.sub}
               onChange={(e) => setNewLocation({...newLocation, sub: e.target.value, final: ''})}
               className="w-full p-2 border rounded mb-4"
             >
-              <option value="">하위 위치 선택 (선택사항)</option>
+              <option value="">세부 위치 선택</option>
               {locations.find(loc => loc.id === newLocation.main)?.children?.map(subLoc => (
                 <option key={subLoc.id} value={subLoc.id}>{subLoc.name}</option>
               ))}
             </select>
           )}
-          {newLocation.sub && (
+          {newLocation.sub && locations.find(loc => loc.id === newLocation.main)?.children?.find(subLoc => subLoc.id === newLocation.sub)?.children && (
             <select
               value={newLocation.final}
               onChange={(e) => setNewLocation({...newLocation, final: e.target.value})}
               className="w-full p-2 border rounded mb-4"
             >
-              <option value="">최종 위치 선택 (선택사항)</option>
+              <option value="">최종 위치 선택</option>
               {locations.find(loc => loc.id === newLocation.main)?.children?.find(subLoc => subLoc.id === newLocation.sub)?.children?.map(finalLoc => (
                 <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.name}</option>
               ))}
