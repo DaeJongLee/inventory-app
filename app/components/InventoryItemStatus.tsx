@@ -7,7 +7,7 @@ interface InventoryItemStatusProps {
   orderPlaced: boolean;
   lowStockTime: string | null;
   orderPlacedTime: string | null;
-  onStatusChange: (status: 'lowStock' | 'orderPlaced', value: boolean) => void;
+  onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
 }
 
 const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({ 
@@ -27,14 +27,14 @@ const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({
   return (
     <div className="flex flex-col space-y-2">
       <div className="flex items-center space-x-2">
-        <button onClick={() => onStatusChange('lowStock', !lowStock)} className="flex items-center">
+        <button onClick={() => onStatusChange(itemId, 'lowStock', !lowStock)} className="flex items-center">
           {lowStock ? <CheckSquare className="text-red-500" /> : <Square />}
           <span className="ml-1">부족</span>
         </button>
         {lowStockTime && <span className="text-xs text-gray-500">{formatTime(lowStockTime)}</span>}
       </div>
       <div className="flex items-center space-x-2">
-        <button onClick={() => onStatusChange('orderPlaced', !orderPlaced)} className="flex items-center">
+        <button onClick={() => onStatusChange(itemId, 'orderPlaced', !orderPlaced)} className="flex items-center">
           {orderPlaced ? <CheckSquare className="text-green-500" /> : <Square />}
           <span className="ml-1">주문완료</span>
         </button>

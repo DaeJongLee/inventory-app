@@ -271,14 +271,14 @@ const InventoryLayout = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <InventoryItemStatus 
-              itemId={item.id}
-              lowStock={item.lowStock || false}
-              orderPlaced={item.orderPlaced || false}
-              lowStockTime={item.lowStockTime || null}
-              orderPlacedTime={item.orderPlacedTime || null}
-              onStatusChange={(status, value) => updateItemStatus(item.id, status, value)}
-            />
+          <InventoryItemStatus 
+            itemId={item.id}
+            lowStock={item.lowStock}
+            orderPlaced={item.orderPlaced}
+            lowStockTime={item.lowStockTime}
+            orderPlacedTime={item.orderPlacedTime}
+            onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
+          />
             <div>
               <button 
                 onClick={() => handleUpdateLocation(item)}
