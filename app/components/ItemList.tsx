@@ -1,13 +1,11 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Item, ItemLocation } from '../types/types';
 import { locations } from '../data/locations';
-import LocationButton from './LocationButton';
 import LocationChangeModal from './LocationChangeModal';
-import SubLocationModal from './SubLocationModal';
 import InventoryItemStatus from './InventoryItemStatus';
 import InventoryStatusLists from './InventoryStatusLists';
 import { Search, Info, MapPin } from 'lucide-react';
@@ -17,12 +15,14 @@ const ItemList = () => {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [displayedItems, setDisplayedItems] = useState<Item[]>([]);
-  const [highlightedLocation, setHighlightedLocation] = useState<string | null>(null);
+  const [highlightedLocation, setHighlightedLocation] = useState<ItemLocation | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isSubLocationModalOpen, setIsSubLocationModalOpen] = useState(false);
   const [selectedMainLocation, setSelectedMainLocation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'items'), (snapshot) => {
@@ -41,7 +41,7 @@ const ItemList = () => {
       setDisplayedItems(newItems);
       setIsLoading(false);
     });
-  
+
     return () => unsubscribe();
   }, []);
 
@@ -49,7 +49,7 @@ const ItemList = () => {
     setSelectedSection(section);
     const sectionItems = items.filter(item => {
       const location = item.location;
-      if (typeof location === 'object') {
+      if (location && typeof location === 'object') {
         return (
           location.main?.toLowerCase() === section.toLowerCase() ||
           location.sub?.toLowerCase() === section.toLowerCase() ||
@@ -63,8 +63,9 @@ const ItemList = () => {
     });
     setDisplayedItems(sectionItems);
     setHighlightedLocation(null);
+    setCurrentPage(1); // Reset to first page on section change
   };
-  
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const searchTerms = searchTerm.toLowerCase().split(' ');
@@ -78,8 +79,9 @@ const ItemList = () => {
     setDisplayedItems(results);
     setSelectedSection(null);
     if (results.length > 0) {
-      setHighlightedLocation(results[0].location.main);
+      setHighlightedLocation({ main: results[0].location.main });
     }
+    setCurrentPage(1); // Reset to first page on search
   };
 
   const handleUpdateLocation = (item: Item) => {
@@ -142,79 +144,102 @@ const ItemList = () => {
           item.id === itemId ? { ...item, [status]: value, [`${status}Time`]: value ? new Date().toISOString() : null } : item
         )
       );
-  
-      console.log(`Item ${itemId} ${status} updated to ${value}`);
     } catch (error) {
-      console.error(`Error updating item ${itemId} ${status}:`, error);
+      console.error(`Error updating item ${status}:`, error);
     }
   };
 
+  const renderPagination = (itemsCount: number) => {
+    const pageCount = Math.ceil(itemsCount / itemsPerPage);
+    const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
+
+    return (
+      <div className="mt-4">
+        {pages.map(page => (
+          <button 
+            key={page} 
+            onClick={() => setCurrentPage(page)} 
+            className={`p-2 border ${currentPage === page ? 'bg-blue-500 text-white' : ''}`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  const paginatedDisplayedItems = displayedItems.slice(
+    (currentPage - 1) * itemsPerPage, 
+    currentPage * itemsPerPage
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="flex max-w-6xl mx-auto p-4">
-      <div className="w-1/2 pr-4">
-        <h1 className="text-2xl font-bold mb-4">재고 레이아웃</h1>
-        
-        <form onSubmit={handleSearch} className="mb-4">
-          <div className="flex">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="아이템 검색..."
-              className="flex-grow p-2 border rounded-l"
-            />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r" disabled={isLoading}>
-              {isLoading ? 'Loading...' : <Search size={20} />}
-            </button>
-          </div>
-        </form>
-        
-        {/* 여기에 재고 레이아웃 렌더링 코드 */}
+    <div>
+      <form onSubmit={handleSearch} className="flex mb-4">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          placeholder="Search items..."
+          className="border p-2 flex-grow"
+        />
+        <button type="submit" className="bg-blue-500 text-white p-2 ml-2">Search</button>
+      </form>
+      
+      <div className="mb-4">
+        {locations.map(location => (
+          <button 
+            key={location.id}
+            onClick={() => handleMainLocationClick(location.id)}
+            className="p-2 border mr-2"
+          >
+            {location.name}
+          </button>
+        ))}
       </div>
       
-      <div className="w-1/2 pl-4">
-        <InventoryStatusLists items={items} />
-        <h2 className="text-xl font-bold mb-4">
-          {selectedSection ? `${selectedSection} 아이템 목록` : '검색 결과'}
-        </h2>
-        <ul className="space-y-2">
-        {displayedItems.map((item) => (
-        <li key={item.id} className="flex items-center justify-between p-2 bg-gray-100 rounded">
-          <div>
-            <span className="font-semibold">{item.name}</span>
-            <div className="text-sm text-gray-600 flex items-center mt-1">
-              <MapPin size={16} className="mr-1" />
-              <span>{getLocationName(item.location)}</span>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-          <InventoryItemStatus 
-            itemId={item.id}
-            lowStock={item.lowStock}
-            orderPlaced={item.orderPlaced}
-            lowStockTime={item.lowStockTime}
-            orderPlacedTime={item.orderPlacedTime}
-            onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
-          />
-            <div>
-              <button 
-                onClick={() => handleUpdateLocation(item)}
-                className="bg-blue-500 text-white p-1 rounded mr-2"
-              >
-                위치 변경
-              </button>
-              <button 
-                onClick={() => handleDeleteItem(item.id)}
-                className="bg-red-500 text-white p-1 rounded"
-              >
-                삭제
-              </button>
-            </div>
-          </div>
-        </li>
-      ))}
+      <div className="bg-gray-100 p-4 border rounded">
+        <ul>
+          {paginatedDisplayedItems.map(item => (
+            <li key={item.id} className="mb-2">
+              <div className="flex justify-between items-center">
+                <div className="flex-1">
+                  <strong>{item.name}</strong> 
+                  <span className="text-gray-500">{getLocationName(item.location)}</span>
+                </div>
+                <InventoryItemStatus
+                  itemId={item.id}
+                  lowStock={item.lowStock}
+                  orderPlaced={item.orderPlaced}
+                  lowStockTime={item.lowStockTime}
+                  orderPlacedTime={item.orderPlacedTime}
+                  onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
+                />
+                <div>
+                  <button 
+                    onClick={() => handleUpdateLocation(item)}
+                    className="bg-blue-500 text-white p-1 rounded mr-2"
+                  >
+                    위치 변경
+                  </button>
+                  <button 
+                    onClick={() => handleDeleteItem(item.id)}
+                    className="bg-red-500 text-white p-1 rounded"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
         </ul>
         
+        {renderPagination(displayedItems.length)}
+
         {selectedSection && (
           <div className="mt-4 p-4 border rounded">
             <h3 className="text-lg font-semibold flex items-center">
@@ -225,7 +250,7 @@ const ItemList = () => {
               {locations.find(loc => loc.id.toLowerCase() === selectedSection.toLowerCase())?.name || '정보 없음'}
             </p>
             <ul className="mt-2">
-              {displayedItems.map(item => (
+              {paginatedDisplayedItems.map(item => (
                 <li key={item.id}>{item.name}</li>
               ))}
             </ul>
@@ -241,13 +266,7 @@ const ItemList = () => {
           locations={locations}
         />
       )}
-      {isSubLocationModalOpen && (
-        <SubLocationModal
-          mainLocation={selectedMainLocation}
-          onSelect={handleSubLocationSelect}
-          onClose={() => setIsSubLocationModalOpen(false)}
-        />
-      )}
+      
     </div>
   );
 };

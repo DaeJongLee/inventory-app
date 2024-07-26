@@ -16,7 +16,7 @@ const InventoryStatusLists: React.FC<InventoryStatusListsProps> = ({ items }) =>
         <ul className="bg-red-100 p-2 rounded">
           {lowStockItems.map(item => (
             <li key={item.id} className="mb-1">
-              {item.name} - {item.location.main} &gt; {item.location.sub} &gt; {item.location.final}
+              {item.name} -&gt; {item.location.final}
             </li>
           ))}
         </ul>
@@ -26,7 +26,7 @@ const InventoryStatusLists: React.FC<InventoryStatusListsProps> = ({ items }) =>
         <ul className="bg-green-100 p-2 rounded">
           {orderedItems.map(item => (
             <li key={item.id} className="mb-1">
-              {item.name} - {item.location.main} &gt; {item.location.sub} &gt; {item.location.final}
+              {item.name} -&gt; {item.location.final}
             </li>
           ))}
         </ul>

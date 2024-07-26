@@ -8,11 +8,9 @@ import { Item, ItemLocation } from '../types/types';
 import { locations } from '../data/locations';
 import LocationButton from './LocationButton';
 import LocationChangeModal from './LocationChangeModal';
-import SubLocationModal from './SubLocationModal';
 import InventoryItemStatus from './InventoryItemStatus';
 import InventoryStatusLists from './InventoryStatusLists';
-import AddItemModal from './AdditemModal';
-
+import AddItemModal from './AddItemModal';
 
 const InventoryLayout = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -25,7 +23,11 @@ const InventoryLayout = () => {
   const [isSubLocationModalOpen, setIsSubLocationModalOpen] = useState(false);
   const [selectedMainLocation, setSelectedMainLocation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLayoutVisible, setIsLayoutVisible] = useState(true);
+  const [visibleSections, setVisibleSections] = useState({
+    preparation: true,
+    sales: true,
+    storage: true
+  });
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ const InventoryLayout = () => {
       return false;
     });
     setDisplayedItems(sectionItems);
-    setHighlightedLocation(null);
+    setHighlightedLocation(location.final || location.sub || location.main);
   };
   
   const handleSearch = (e: React.FormEvent) => {
@@ -82,7 +84,7 @@ const InventoryLayout = () => {
     setDisplayedItems(results);
     setSelectedSection(null);
     if (results.length > 0) {
-      setHighlightedLocation(results[0].location);
+      setHighlightedLocation(results[0].location.final || results[0].location.sub || results[0].location.main);
     }
   };
 
@@ -156,72 +158,86 @@ const InventoryLayout = () => {
   const renderInventoryLayout = () => (
     <div className="grid grid-cols-3 gap-4">
       {/* 조제실 레이아웃 */}
-      <div className="col-span-3">
-        <h3 className="text-lg font-semibold mb-2">조제실</h3>
-        <div className="grid grid-cols-4 gap-1">
-          {/* 조제실 4열 횡대*/}
-          <div></div>
-          <LocationButton id="MA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'MA' || highlightedLocation?.sub === 'MA'} />
-          <LocationButton id="MB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'MB' || highlightedLocation?.sub === 'MB'} />
-          <div></div>
-          {/* 1열 */}
-          <LocationButton id="LC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LC' || highlightedLocation?.sub === 'LC'} />
-          <div></div>
-          <div></div>
-          <LocationButton id="RA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RA' || highlightedLocation?.sub === 'RA'} />
-          {/* 2열 */}
-          <LocationButton id="LB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LB' || highlightedLocation?.sub === 'LB'} />
-          <LocationButton id="INS" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'INS' || highlightedLocation?.sub === 'INS'} />
-          <div></div>
-          <LocationButton id="RB" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RB' || highlightedLocation?.sub === 'RB'} />
-          <LocationButton id="LA" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'LA' || highlightedLocation?.sub === 'LA'} />
-          <LocationButton id="N (0-9)" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'N (0-9)' || highlightedLocation?.sub === 'N (0-9)'} />
-          <div></div>
-          <LocationButton id="RC" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === 'RC' || highlightedLocation?.sub === 'RC'} />
-          {/* 3열 */}
+      {visibleSections.preparation && (
+        <div className="col-span-3">
+          <h3 className="text-lg font-semibold mb-2">조제실</h3>
+          <div className="grid grid-cols-4 gap-1">
+            {/* 조제실 4열 횡대*/}
+            <div></div>
+            <LocationButton id="MA" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'MA'} />
+            <LocationButton id="MB" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'MB'} />
+            <div></div>
+            {/* 1열 */}
+            <LocationButton id="LC" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'LC'} />
+            <div></div>
+            <div></div>
+            <LocationButton id="RA" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'RA'} />
+            {/* 2열 */}
+            <LocationButton id="LB" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'LB'} />
+            <LocationButton id="INS" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'INS'} />
+            <div></div>
+            <LocationButton id="RB" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'RB'} />
+            <LocationButton id="LA" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'LA'} />
+            <LocationButton id="N (0-9)" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'N (0-9)'} />
+            <div></div>
+            <LocationButton id="RC" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'RC'} />
+            {/* 3열 */}
+          </div>
         </div>
-      </div>
+      )}
       {/* 판매 구역 레이아웃 */}
-      <div className="col-span-3">
-        <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
-        <div className="grid grid-cols-1 gap-2">
-          <div className="grid grid-cols-3 gap-1">
-            <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-A'} />
-            <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-B'} />
-            <LocationButton id="red-" onClick={() => handleMainLocationClick('red-')} isHighlighted={highlightedLocation?.sub === 'red-'} />
+      {visibleSections.sales && (
+        <div className="col-span-3">
+          <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
+          <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-5 gap-1">
+              <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-A'} />
+              <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-B'} />
+              <div></div>
+              <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-A'} />
+              <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-B'} />
+            </div>
+            <div className="grid grid-cols-3 gap-1">
+            <LocationButton id="Red-1" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-1'} />
+            <LocationButton id="Red-2" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-2'} />
+            <LocationButton id="Blue-1" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-1'} />
+            <LocationButton id="Red-3" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-3'} />
+            <LocationButton id="Red-4" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-4'} />
+            <LocationButton id="Blue-2" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-2'} />
+            <LocationButton id="Red-5" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-5'} />
+            <LocationButton id="Red-6" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-6'} />
+            <LocationButton id="Blue-3" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-3'} />
+            </div>
+            <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Green-'} />
+            <div className="grid grid-cols-7 gap-1">
+              {['DPA', 'DPB', 'DPC', 'DPD', 'DPE', 'DPF', 'DPG'].map(id => (
+                <LocationButton 
+                  key={id} 
+                  id={id} 
+                  onClick={handleSectionClick} 
+                  isHighlighted={highlightedLocation === id} 
+                />
+              ))}
+            </div>
           </div>
+        </div>
+      )}
+      {/* 집하장 레이아웃 */}
+      {visibleSections.storage && (
+        <div className="col-span-3">
+          <h3 className="text-lg font-semibold mb-2">집하장</h3>
           <div className="grid grid-cols-3 gap-1">
-            <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-A'} />
-            <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-B'} />
-            <LocationButton id="blue-" onClick={() => handleMainLocationClick('blue-')} isHighlighted={highlightedLocation?.sub === 'blue-'} />
-          </div>
-          <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Green-'} />
-          <div className="grid grid-cols-7 gap-1">
-            {['DPA', 'DPB', 'DPC', 'DPD', 'DPE', 'DPF', 'DPG'].map(id => (
+            {['SL', 'SM', 'SR', 'SS'].map(id => (
               <LocationButton 
                 key={id} 
                 id={id} 
                 onClick={handleSectionClick} 
-                isHighlighted={highlightedLocation?.main === id || highlightedLocation?.sub === id} 
+                isHighlighted={highlightedLocation === id} 
               />
             ))}
           </div>
         </div>
-      </div>
-      {/* 집하장 레이아웃 */}
-      <div className="col-span-3">
-        <h3 className="text-lg font-semibold mb-2">집하장</h3>
-        <div className="grid grid-cols-3 gap-1">
-          {['SL', 'SM', 'SR', 'SS'].map(id => (
-            <LocationButton 
-              key={id} 
-              id={id} 
-              onClick={handleSectionClick} 
-              isHighlighted={highlightedLocation?.main === id || highlightedLocation?.sub === id} 
-            />
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 
@@ -244,15 +260,29 @@ const InventoryLayout = () => {
             </button>
           </div>
         </form>
-        
+
         <button 
-          onClick={() => setIsLayoutVisible(!isLayoutVisible)} 
+          onClick={() => setVisibleSections(prev => ({ ...prev, preparation: !prev.preparation }))} 
           className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
         >
-          {isLayoutVisible ? '레이아웃 숨기기' : '레이아웃 보기'}
+          {visibleSections.preparation ? '조제실 숨기기' : '조제실 보기'}
         </button>
 
-        {isLayoutVisible && renderInventoryLayout()}
+        <button 
+          onClick={() => setVisibleSections(prev => ({ ...prev, sales: !prev.sales }))} 
+          className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
+        >
+          {visibleSections.sales ? '판매 구역 숨기기' : '판매 구역 보기'}
+        </button>
+
+        <button 
+          onClick={() => setVisibleSections(prev => ({ ...prev, storage: !prev.storage }))} 
+          className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
+        >
+          {visibleSections.storage ? '집하장 숨기기' : '집하장 보기'}
+        </button>
+
+        {renderInventoryLayout()}
       </div>
       
       <div className="w-1/2 pl-4">
@@ -270,41 +300,41 @@ const InventoryLayout = () => {
           </button>
         </div>
         <ul className="space-y-2">
-        {displayedItems.map((item) => (
-        <li key={item.id} className="flex items-center justify-between p-2 bg-gray-100 rounded">
-          <div>
-            <span className="font-semibold">{item.name}</span>
-            <div className="text-sm text-gray-600 flex items-center mt-1">
-              <MapPin size={16} className="mr-1" />
-              <span>{getLocationName(item.location)}</span>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-          <InventoryItemStatus 
-            itemId={item.id}
-            lowStock={item.lowStock}
-            orderPlaced={item.orderPlaced}
-            lowStockTime={item.lowStockTime}
-            orderPlacedTime={item.orderPlacedTime}
-            onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
-          />
-            <div>
-              <button 
-                onClick={() => handleUpdateLocation(item)}
-                className="bg-blue-500 text-white p-1 rounded mr-2"
-              >
-                위치 변경
-              </button>
-              <button 
-                onClick={() => handleDeleteItem(item.id)}
-                className="bg-red-500 text-white p-1 rounded"
-              >
-                삭제
-              </button>
-            </div>
-          </div>
-        </li>
-      ))}
+          {displayedItems.map((item) => (
+            <li key={item.id} className="flex items-center justify-between p-2 bg-gray-100 rounded">
+              <div>
+                <span className="font-semibold">{item.name}</span>
+                <div className="text-sm text-gray-600 flex items-center mt-1">
+                  <MapPin size={16} className="mr-1" />
+                  <span>{getLocationName(item.location)}</span>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <InventoryItemStatus 
+                  itemId={item.id}
+                  lowStock={item.lowStock}
+                  orderPlaced={item.orderPlaced}
+                  lowStockTime={item.lowStockTime}
+                  orderPlacedTime={item.orderPlacedTime}
+                  onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
+                />
+                <div>
+                  <button 
+                    onClick={() => handleUpdateLocation(item)}
+                    className="bg-blue-500 text-white p-1 rounded mr-2"
+                  >
+                    위치 변경
+                  </button>
+                  <button 
+                    onClick={() => handleDeleteItem(item.id)}
+                    className="bg-red-500 text-white p-1 rounded"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
         </ul>
         
         {selectedSection && (
@@ -331,13 +361,6 @@ const InventoryLayout = () => {
           onClose={() => setIsModalOpen(false)}
           onLocationChange={handleLocationChange}
           locations={locations}
-        />
-      )}
-      {isSubLocationModalOpen && (
-        <SubLocationModal
-          mainLocation={selectedMainLocation}
-          onSelect={handleSubLocationSelect}
-          onClose={() => setIsSubLocationModalOpen(false)}
         />
       )}
       {isAddItemModalOpen && (
