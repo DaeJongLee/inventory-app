@@ -5,8 +5,6 @@ export const locations: Location[] = [
     id: 'sales',
     name: '판매구역',
     children: [
-      { id: 'refrigerator', name: '냉장고' },
-      { id: 'warm-storage', name: '온장고' },
       { id: 'red', name: 'Red-', 
         children: [
           { id: 'red-a', name: 'A' },
@@ -27,9 +25,6 @@ export const locations: Location[] = [
         ]
       },
       { id: 'green', name: 'Green-' },
-      { id: 'rack', name: '랙' },
-      { id: 'under-chair', name: '의자밑' },
-      { id: 'band-stand', name: '밴드매대' },
       { id: 'dp', name: 'DP', 
         children: [
           { id: 'dpa', name: 'DPA' },
@@ -39,6 +34,15 @@ export const locations: Location[] = [
           { id: 'dpe', name: 'DPE' },
           { id: 'dpf', name: 'DPF' },
           { id: 'dpg', name: 'DPG' }
+        ]
+      },
+      { id: 'other', name: '그외',
+        children: [
+          { id: 'refrigerator', name: '냉장고' },
+          { id: 'warm-storage', name: '온장고' },
+          { id: 'rack', name: '랙' },
+          { id: 'under-chair', name: '의자밑' },
+          { id: 'band-stand', name: '밴드매대' }
         ]
       }
     ]

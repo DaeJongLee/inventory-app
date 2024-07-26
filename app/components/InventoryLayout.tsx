@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Search, Info, MapPin } from 'lucide-react';
+import { Search, Info, MapPin, PlusCircle } from 'lucide-react';
 import { collection, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Item, ItemLocation } from '../types/types';
@@ -11,6 +11,8 @@ import LocationChangeModal from './LocationChangeModal';
 import SubLocationModal from './SubLocationModal';
 import InventoryItemStatus from './InventoryItemStatus';
 import InventoryStatusLists from './InventoryStatusLists';
+import AddItemModal from './AdditemModal';
+
 
 const InventoryLayout = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -23,6 +25,8 @@ const InventoryLayout = () => {
   const [isSubLocationModalOpen, setIsSubLocationModalOpen] = useState(false);
   const [selectedMainLocation, setSelectedMainLocation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLayoutVisible, setIsLayoutVisible] = useState(true);
+  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'items'), (snapshot) => {
@@ -109,8 +113,8 @@ const InventoryLayout = () => {
 
   const getLocationName = (location: ItemLocation) => {
     const mainName = locations.find(loc => loc.id === location.main)?.name || location.main;
-    const subName = location.sub ? ` > ${locations.find(loc => loc.id === location.sub)?.name || location.sub}` : '';
-    const finalName = location.final ? ` > ${locations.find(loc => loc.id === location.final)?.name || location.final}` : '';
+    const subName = location.sub ? ` > ${locations.find(loc => loc.id === location.main)?.children?.find(subLoc => subLoc.id === location.sub)?.name || location.sub}` : '';
+    const finalName = location.final ? ` > ${locations.find(loc => loc.id === location.main)?.children?.find(subLoc => subLoc.id === location.sub)?.children?.find(finalLoc => finalLoc.id === location.final)?.name || location.final}` : '';
     return `${mainName}${subName}${finalName}`;
   };
 
@@ -132,13 +136,11 @@ const InventoryLayout = () => {
     try {
       const itemRef = doc(db, 'items', itemId);
       
-      // Firebase 데이터베이스 업데이트
       await updateDoc(itemRef, { 
         [status]: value,
         [`${status}Time`]: value ? new Date().toISOString() : null
       });
   
-      // 로컬 상태 업데이트
       setItems(prevItems => 
         prevItems.map(item => 
           item.id === itemId ? { ...item, [status]: value, [`${status}Time`]: value ? new Date().toISOString() : null } : item
@@ -183,26 +185,17 @@ const InventoryLayout = () => {
       <div className="col-span-3">
         <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
         <div className="grid grid-cols-1 gap-2">
-          <div className="grid grid-cols-5 gap-1">
-            <LocationButton id="냉장고" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '냉장고'} />
-            <LocationButton id="온장고" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '온장고'} />
-            <LocationButton id="랙" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '랙'} />
-            <LocationButton id="의자밑" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '의자밑'} />
-            <LocationButton id="밴드매대" onClick={handleSectionClick} isHighlighted={highlightedLocation?.main === '밴드매대'} />
+          <div className="grid grid-cols-3 gap-1">
+            <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-A'} />
+            <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-B'} />
+            <LocationButton id="red-" onClick={() => handleMainLocationClick('red-')} isHighlighted={highlightedLocation?.sub === 'red-'} />
           </div>
           <div className="grid grid-cols-3 gap-1">
-            <div className="grid grid-rows-3 gap-1">
-              <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-A'} />
-              <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Red-B'} />
-              <LocationButton id="red-" onClick={() => handleMainLocationClick('red-')} isHighlighted={highlightedLocation?.sub === 'red-'} />
-            </div>
-            <div className="grid grid-rows-3 gap-1">
-              <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-A'} />
-              <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-B'} />
-              <LocationButton id="blue-" onClick={() => handleMainLocationClick('blue-')} isHighlighted={highlightedLocation?.sub === 'blue-'} />
-            </div>
-            <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Green-'} />
+            <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-A'} />
+            <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Blue-B'} />
+            <LocationButton id="blue-" onClick={() => handleMainLocationClick('blue-')} isHighlighted={highlightedLocation?.sub === 'blue-'} />
           </div>
+          <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation?.sub === 'Green-'} />
           <div className="grid grid-cols-7 gap-1">
             {['DPA', 'DPB', 'DPC', 'DPD', 'DPE', 'DPF', 'DPG'].map(id => (
               <LocationButton 
@@ -252,14 +245,30 @@ const InventoryLayout = () => {
           </div>
         </form>
         
-        {renderInventoryLayout()}
+        <button 
+          onClick={() => setIsLayoutVisible(!isLayoutVisible)} 
+          className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
+        >
+          {isLayoutVisible ? '레이아웃 숨기기' : '레이아웃 보기'}
+        </button>
+
+        {isLayoutVisible && renderInventoryLayout()}
       </div>
       
       <div className="w-1/2 pl-4">
         <InventoryStatusLists items={items} />
-        <h2 className="text-xl font-bold mb-4">
-          {selectedSection ? `${selectedSection} 아이템 목록` : '검색 결과'}
-        </h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">
+            {selectedSection ? `${selectedSection} 아이템 목록` : '검색 결과'}
+          </h2>
+          <button 
+            onClick={() => setIsAddItemModalOpen(true)} 
+            className="bg-green-500 text-white p-2 rounded flex items-center"
+          >
+            <PlusCircle size={20} className="mr-2" />
+            아이템 추가
+          </button>
+        </div>
         <ul className="space-y-2">
         {displayedItems.map((item) => (
         <li key={item.id} className="flex items-center justify-between p-2 bg-gray-100 rounded">
@@ -324,11 +333,22 @@ const InventoryLayout = () => {
           locations={locations}
         />
       )}
-{isSubLocationModalOpen && (
+      {isSubLocationModalOpen && (
         <SubLocationModal
           mainLocation={selectedMainLocation}
           onSelect={handleSubLocationSelect}
           onClose={() => setIsSubLocationModalOpen(false)}
+        />
+      )}
+      {isAddItemModalOpen && (
+        <AddItemModal
+          onClose={() => setIsAddItemModalOpen(false)}
+          onAddItem={(newItem: Item) => {
+            setItems([...items, newItem]);
+            setDisplayedItems([...displayedItems, newItem]);
+          }}
+          existingItems={items}
+          locations={locations}
         />
       )}
     </div>
