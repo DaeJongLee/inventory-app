@@ -1,0 +1,84 @@
+>ls -al
+total 736
+drwxr-xr-x@  28 dj  staff     896 Jul 27 14:55 .
+drwx------@  13 dj  staff     416 Jul 27 14:55 ..
+-rw-r--r--@   1 dj  staff   10244 Jul 27 14:41 .DS_Store
+-rw-r--r--    1 dj  staff    2361 Jul 27 10:07 .env.local
+-rw-r--r--@   1 dj  staff      40 Jul 24 17:08 .eslintrc.json
+drwxr-xr-x@  14 dj  staff     448 Jul 27 14:55 .git
+drwxr-xr-x    3 dj  staff      96 Jul 25 15:22 .github
+-rw-r--r--@   1 dj  staff     449 Jul 25 12:47 .gitignore
+drwxr-xr-x@  12 dj  staff     384 Jul 27 14:16 .next
+drwxr-xr-x@   6 dj  staff     192 Jul 25 16:00 .venv
+-rw-r--r--@   1 dj  staff    1383 Jul 24 17:08 README.md
+drwxr-xr-x@  11 dj  staff     352 Jul 27 14:16 app
+-rw-r--r--    1 dj  staff   12990 Jul 24 19:03 data.csv
+-rw-r--r--@   1 dj  staff     277 Jul 24 20:57 instructions.txt
+drwxr-xr-x@   5 dj  staff     160 Jul 25 21:10 json
+-rw-r--r--@   1 dj  staff     201 Jul 24 17:36 next-env.d.ts
+-rw-r--r--@   1 dj  staff     199 Jul 25 14:03 next.config.js
+-rw-r--r--@   1 dj  staff     170 Jul 24 17:36 next.config.mjs
+drwxr-xr-x@ 419 dj  staff   13408 Jul 27 12:32 node_modules
+-rw-r--r--@   1 dj  staff  265274 Jul 27 14:15 package-lock.json
+-rw-r--r--@   1 dj  staff     748 Jul 27 14:15 package.json
+-rw-r--r--@   1 dj  staff     135 Jul 24 17:08 postcss.config.mjs
+drwxr-xr-x@   4 dj  staff     128 Jul 25 15:22 public
+-rw-r--r--    1 dj  staff    1689 Jul 27 14:55 root_tree.txt
+drwxr-xr-x@   5 dj  staff     160 Jul 25 15:44 scripts
+-rw-r--r--@   1 dj  staff     498 Jul 27 14:15 tailwind.config.ts
+-rw-r--r--@   1 dj  staff     637 Jul 24 19:51 tsconfig.json
+-rw-r--r--    1 dj  staff   27624 Jul 24 19:03 상품목록.csv
+
+
+├── README.md
+├── app
+│   ├── components
+│   │   ├── AddItemModal.tsx
+│   │   ├── InventoryItem.tsx
+│   │   ├── InventoryItemStatus.tsx
+│   │   ├── InventoryLayout.tsx
+│   │   ├── InventoryList.tsx
+│   │   ├── InventoryStatusLists.tsx
+│   │   ├── ItemForm.tsx
+│   │   ├── ItemList.tsx
+│   │   ├── LocationButton.tsx
+│   │   ├── LocationChangeModal.tsx
+│   │   ├── LocationSelector.tsx
+│   │   ├── NameConfirmDialog.tsx
+│   │   └── SearchBar.tsx
+│   ├── data
+│   │   └── locations.ts
+│   ├── favicon.ico
+│   ├── firebase.ts
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── types
+│       └── types.ts
+├── data.csv
+├── instructions.txt
+├── json
+│   ├── firstDataMaking
+│   │   ├── data.csv
+│   │   ├── jsonmod.ipynb
+│   │   └── upload_to_firebase.py
+│   └── inventory_data.json
+├── next-env.d.ts
+├── next.config.js
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── public
+│   ├── next.svg
+│   └── vercel.svg
+├── root_tree.txt
+├── scripts
+│   ├── convertCsvToJson.js
+│   ├── migrateLocationData.js
+│   └── serviceAccountKey.json
+├── tailwind.config.ts
+├── tsconfig.json
+└── 상품목록.csv
+
+9 directories, 42 files
