@@ -2,7 +2,7 @@ import React from 'react';
 import { CheckSquare, Square } from 'lucide-react';
 
 interface InventoryItemStatusProps {
-  itemId: string;
+  itemId: string;  // 'id'를 'itemId'로 변경
   lowStock: boolean;
   orderPlaced: boolean;
   lowStockTime: string | null;
@@ -11,7 +11,7 @@ interface InventoryItemStatusProps {
 }
 
 const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({ 
-  itemId, 
+  itemId,  // 'id'를 'itemId'로 변경
   lowStock, 
   orderPlaced,
   lowStockTime,

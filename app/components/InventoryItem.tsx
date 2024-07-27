@@ -6,6 +6,22 @@ interface InventoryItemStatusProps {
   initialLowStock?: boolean;
   initialOrderPlaced?: boolean;
 }
+interface InventoryItemProps {
+  id: string;  // id prop 추가
+  name: string;
+  quantity: number;
+  imageUrl: string;
+}
+
+const InventoryItem: React.FC<InventoryItemProps> = ({ id, name, quantity, imageUrl }) => {
+  return (
+    <div className="border p-4 rounded-lg">
+      <img src={imageUrl} alt={name} className="w-full h-32 object-cover mb-2 rounded" />
+      <h3 className="font-bold">{name}</h3>
+      <p>수량: {quantity}</p>
+    </div>
+  );
+};
 
 const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({ itemId, initialLowStock = false, initialOrderPlaced = false }) => {
   const [lowStock, setLowStock] = useState(initialLowStock);

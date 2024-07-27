@@ -6,21 +6,20 @@ import { collection, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/fire
 import { db } from '../firebase';
 import { Item, ItemLocation } from '../types/types';
 import { locations } from '../data/locations';
-import LocationButton from './LocationButton';
 import LocationChangeModal from './LocationChangeModal';
 import InventoryItemStatus from './InventoryItemStatus';
 import InventoryStatusLists from './InventoryStatusLists';
 import AddItemModal from './AddItemModal';
+import InventoryLayoutMain from './layouts/InventoryLayoutMain';
 
 const InventoryLayout = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [displayedItems, setDisplayedItems] = useState<Item[]>([]);
-  const [highlightedLocation, setHighlightedLocation] = useState<string | null>(null);  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [highlightedLocation, setHighlightedLocation] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-  const [isSubLocationModalOpen, setIsSubLocationModalOpen] = useState(false);
-  const [selectedMainLocation, setSelectedMainLocation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [visibleSections, setVisibleSections] = useState({
     preparation: true,
@@ -28,6 +27,7 @@ const InventoryLayout = () => {
     storage: true
   });
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'items'), (snapshot) => {
@@ -50,6 +50,17 @@ const InventoryLayout = () => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm.length > 1) {
+      const matchedItems = items.filter(item => 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSuggestions(matchedItems.map(item => item.name));
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchTerm, items]);
+
   const handleSectionClick = (section: string) => {
     setSelectedSection(section);
     const sectionItems = items.filter(item => {
@@ -67,7 +78,8 @@ const InventoryLayout = () => {
       return false;
     });
     setDisplayedItems(sectionItems);
-    setHighlightedLocation(section);  };
+    setHighlightedLocation(section);
+  };
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,20 +130,6 @@ const InventoryLayout = () => {
     return `${mainName}${subName}${finalName}`;
   };
 
-  const handleMainLocationClick = (location: string) => {
-    if (location === 'red-' || location === 'blue-') {
-      setSelectedMainLocation(location);
-      setIsSubLocationModalOpen(true);
-    } else {
-      handleSectionClick(location);
-    }
-  };
-
-  const handleSubLocationSelect = (subLocation: string) => {
-    setIsSubLocationModalOpen(false);
-    handleSectionClick(`${selectedMainLocation}${subLocation}`);
-  };
-
   const updateItemStatus = async (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => {
     try {
       const itemRef = doc(db, 'items', itemId);
@@ -152,91 +150,6 @@ const InventoryLayout = () => {
       console.error(`Error updating item ${itemId} ${status}:`, error);
     }
   };
-  const renderInventoryLayout = () => (
-    <div className="grid grid-cols-3 gap-4">
-      {/* 조제실 레이아웃 */}
-      {visibleSections.preparation && (
-        <div className="col-span-3">
-          <h3 className="text-lg font-semibold mb-2">조제실</h3>
-          <div className="grid grid-cols-4 gap-1">
-            {/* 조제실 4열 횡대*/}
-            <div></div>
-            <LocationButton id="MA" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'MA'} />
-            <LocationButton id="MB" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'MB'} />
-            <div></div>
-            {/* 1열 */}
-            <LocationButton id="LC" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'LC'} />
-            <div></div>
-            <div></div>
-            <LocationButton id="RA" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'RA'} />
-            {/* 2열 */}
-            <LocationButton id="LB" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'LB'} />
-            <LocationButton id="INS" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'INS'} />
-            <div></div>
-            <LocationButton id="RB" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'RB'} />
-            <LocationButton id="LA" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'LA'} />
-            <LocationButton id="N (0-9)" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'N (0-9)'} />
-            <div></div>
-            <LocationButton id="RC" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'RC'} />
-            {/* 3열 */}
-          </div>
-        </div>
-      )}
-      {/* 판매 구역 레이아웃 */}
-      {visibleSections.sales && (
-        <div className="col-span-3">
-          <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
-          <div className="grid grid-cols-1 gap-2">
-            <div className="grid grid-cols-5 gap-1">
-              <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-A'} />
-              <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-B'} />
-              <div></div>
-              <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-A'} />
-              <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-B'} />
-            </div>
-            <div className="grid grid-cols-3 gap-1">
-            <LocationButton id="Red-1" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-1'} />
-            <LocationButton id="Red-2" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-2'} />
-            <LocationButton id="Blue-1" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-1'} />
-            <LocationButton id="Red-3" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-3'} />
-            <LocationButton id="Red-4" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-4'} />
-            <LocationButton id="Blue-2" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-2'} />
-            <LocationButton id="Red-5" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-5'} />
-            <LocationButton id="Red-6" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-6'} />
-            <LocationButton id="Blue-3" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-3'} />
-            </div>
-            <LocationButton id="Green-" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Green-'} />
-            <div className="grid grid-cols-7 gap-1">
-              {['DPA', 'DPB', 'DPC', 'DPD', 'DPE', 'DPF', 'DPG'].map(id => (
-                <LocationButton 
-                  key={id} 
-                  id={id} 
-                  onClick={handleSectionClick} 
-                  isHighlighted={highlightedLocation === id} 
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      {/* 집하장 레이아웃 */}
-      {visibleSections.storage && (
-        <div className="col-span-3">
-          <h3 className="text-lg font-semibold mb-2">집하장</h3>
-          <div className="grid grid-cols-3 gap-1">
-            {['SL', 'SM', 'SR', 'SS'].map(id => (
-              <LocationButton 
-                key={id} 
-                id={id} 
-                onClick={handleSectionClick} 
-                isHighlighted={highlightedLocation === id} 
-              />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
 
   return (
     <div className="flex max-w-6xl mx-auto p-4">
@@ -244,17 +157,35 @@ const InventoryLayout = () => {
         <h1 className="text-2xl font-bold mb-4">재고 레이아웃</h1>
         
         <form onSubmit={handleSearch} className="mb-4">
-          <div className="flex">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="아이템 검색..."
-              className="flex-grow p-2 border rounded-l"
-            />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r" disabled={isLoading}>
-              {isLoading ? 'Loading...' : <Search size={20} />}
-            </button>
+          <div className="flex flex-col">
+            <div className="flex">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="아이템 검색..."
+                className="flex-grow p-2 border rounded-l"
+              />
+              <button type="submit" className="bg-blue-500 text-white p-2 rounded-r" disabled={isLoading}>
+                {isLoading ? 'Loading...' : <Search size={20} />}
+              </button>
+            </div>
+            {suggestions.length > 0 && (
+              <ul className="mt-2 border rounded">
+                {suggestions.map((suggestion, index) => (
+                  <li 
+                    key={index} 
+                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setSearchTerm(suggestion);
+                      setSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </form>
 
@@ -279,7 +210,11 @@ const InventoryLayout = () => {
           {visibleSections.storage ? '집하장 숨기기' : '집하장 보기'}
         </button>
 
-        {renderInventoryLayout()}
+        <InventoryLayoutMain 
+          visibleSections={visibleSections}
+          handleSectionClick={handleSectionClick}
+          highlightedLocation={highlightedLocation}
+        />
       </div>
       
       <div className="w-1/2 pl-4">

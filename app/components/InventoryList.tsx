@@ -159,12 +159,7 @@ export default function InventoryList() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredItems.map((item) => (
           <div key={item.id} className="border p-4 rounded-lg">
-            <InventoryItem 
-              id={item.id} 
-              name={item.name} 
-              quantity={item.quantity} 
-              imageUrl={item.imageUrl} 
-            />
+
             <InventoryItemStatus 
               itemId={item.id}
               lowStock={item.lowStock}
