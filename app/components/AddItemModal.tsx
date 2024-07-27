@@ -30,6 +30,15 @@ const AddItemModal: React.FC<AddItemModalProps> = ({ onClose, onAddItem, existin
     }
   }, [itemName, existingItems]);
 
+  useEffect(() => {
+    if (selectedLocation.sub === 'Red-' || selectedLocation.sub === 'Blue-') {
+      setSelectedLocation(prev => ({
+        ...prev,
+        final: prev.sub ? `${prev.sub.toLowerCase()}${prev.final || ''}` : prev.final
+      }));
+    }
+  }, [selectedLocation.sub, selectedLocation.final]);
+  
   const handleMainLocationSelect = (main: string) => {
     setSelectedLocation({ main, sub: '', final: '' });
     const subLocs = locations.find(loc => loc.name === main)?.children?.map(child => child.name) || [];

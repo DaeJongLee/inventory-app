@@ -211,7 +211,10 @@ const InventoryLayout = () => {
             </button>
           </div>
           
-          <InventoryStatusLists items={items} />
+          <InventoryStatusLists 
+            items={items} 
+            onUpdateStatus={updateItemStatus}
+          />
           
           <ul className="space-y-4 mt-4">
             {displayedItems.map((item) => (

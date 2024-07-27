@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Item, Location, ItemLocation } from '../types/types';
 
 interface LocationChangeModalProps {
@@ -15,6 +15,15 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
     final: item.location.final || ''
   });
 
+  useEffect(() => {
+    if (newLocation.sub === 'Red-' || newLocation.sub === 'Blue-') {
+      setNewLocation(prev => ({
+        ...prev,
+        final: prev.sub ? `${prev.sub.toLowerCase()}${prev.final || ''}` : prev.final
+      }));
+    }
+  }, [newLocation.sub, newLocation.final]);
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onLocationChange(item.id, newLocation);
