@@ -17,8 +17,7 @@ const InventoryLayout = () => {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [displayedItems, setDisplayedItems] = useState<Item[]>([]);
-  const [highlightedLocation, setHighlightedLocation] = useState<ItemLocation | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [highlightedLocation, setHighlightedLocation] = useState<string | null>(null);  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isSubLocationModalOpen, setIsSubLocationModalOpen] = useState(false);
   const [selectedMainLocation, setSelectedMainLocation] = useState<string | null>(null);
@@ -68,8 +67,7 @@ const InventoryLayout = () => {
       return false;
     });
     setDisplayedItems(sectionItems);
-    setHighlightedLocation(location.final || location.sub || location.main);
-  };
+    setHighlightedLocation(section);  };
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
