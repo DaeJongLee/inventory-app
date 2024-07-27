@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { Search, Info, MapPin, PlusCircle } from 'lucide-react';
-import { collection, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, onSnapshot, updateDoc, deleteDoc, doc, writeBatch } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Item, ItemLocation } from '../types/types';
 import { locations } from '../data/locations';
 import LocationChangeModal from './LocationChangeModal';
-import InventoryItemStatus from './InventoryItemStatus';
 import InventoryStatusLists from './InventoryStatusLists';
 import AddItemModal from './AddItemModal';
 import InventoryLayoutMain from './layouts/InventoryLayoutMain';
+import InventoryItemStatus from './InventoryItemStatus';
 
 const InventoryLayout = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -105,21 +105,26 @@ const InventoryLayout = () => {
 
   const handleLocationChange = async (itemId: string, newLocation: ItemLocation) => {
     try {
-      await updateDoc(doc(db, 'items', itemId), { location: newLocation });
+      const itemRef = doc(db, 'items', itemId);
+      await updateDoc(itemRef, { location: newLocation });
       setIsModalOpen(false);
       setSelectedItem(null);
+      
+      // Update local state
+      setItems(prevItems => 
+        prevItems.map(item => 
+          item.id === itemId ? { ...item, location: newLocation } : item
+        )
+      );
+      setDisplayedItems(prevItems => 
+        prevItems.map(item => 
+          item.id === itemId ? { ...item, location: newLocation } : item
+        )
+      );
+  
+      console.log(`Item ${itemId} location updated successfully`);
     } catch (error) {
       console.error("Error updating item location:", error);
-    }
-  };
-
-  const handleDeleteItem = async (itemId: string) => {
-    if (window.confirm('정말로 이 아이템을 삭제하시겠습니까?')) {
-      try {
-        await deleteDoc(doc(db, 'items', itemId));
-      } catch (error) {
-        console.error("Error deleting item:", error);
-      }
     }
   };
 
@@ -150,12 +155,54 @@ const InventoryLayout = () => {
       console.error(`Error updating item ${itemId} ${status}:`, error);
     }
   };
+  
+
+  const handleDeleteItems = async (itemIds: string[]) => {
+    if (window.confirm(`선택한 ${itemIds.length}개의 항목을 삭제하시겠습니까?`)) {
+      try {
+        const batch = writeBatch(db);
+        itemIds.forEach(id => {
+          const itemRef = doc(db, 'items', id);
+          batch.delete(itemRef);
+        });
+        await batch.commit();
+
+        setItems(prevItems => prevItems.filter(item => !itemIds.includes(item.id)));
+        setDisplayedItems(prevItems => prevItems.filter(item => !itemIds.includes(item.id)));
+        console.log(`${itemIds.length} items deleted successfully`);
+      } catch (error) {
+        console.error("Error deleting items:", error);
+      }
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* 첫 번째 행: 부족 재고 리스트와 주문 완료 리스트 */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700">부족 재고 리스트</h2>
+          <InventoryStatusLists 
+            items={items} 
+            listType="lowStock" 
+            onStatusChange={updateItemStatus}
+            onDeleteItems={handleDeleteItems}
+          />
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700">주문 완료 리스트</h2>
+          <InventoryStatusLists 
+            items={items} 
+            listType="orderPlaced" 
+            onStatusChange={updateItemStatus}
+            onDeleteItems={handleDeleteItems}
+          />
+        </div>
+
+        {/* 두 번째 행: 재고 레이아웃과 검색 결과 */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 레이아웃</h2>
           
@@ -211,17 +258,12 @@ const InventoryLayout = () => {
             </button>
           </div>
           
-          <InventoryStatusLists 
-            items={items} 
-            onUpdateStatus={updateItemStatus}
-          />
-          
           <ul className="space-y-4 mt-4">
             {displayedItems.map((item) => (
               <li key={item.id} className="border p-4 rounded-lg hover:shadow-md transition duration-200">
                 <div className="flex justify-between items-center">
                   <div>
-                    <span className="font-semibold text-lg">{item.name}</span>
+                    <span className="font-semibold text-lg">{item.name}</span> 
                     <div className="text-sm text-gray-600 flex items-center mt-1">
                       <MapPin size={16} className="mr-1" />
                       <span>{getLocationName(item.location)}</span>
@@ -229,13 +271,15 @@ const InventoryLayout = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                     <InventoryItemStatus 
-                      itemId={item.id}
-                      lowStock={item.lowStock}
-                      orderPlaced={item.orderPlaced}
-                      lowStockTime={item.lowStockTime}
-                      orderPlacedTime={item.orderPlacedTime}
-                      onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
-                    />
+                    itemId={item.id}
+                    lowStock={item.lowStock}
+                    orderPlaced={item.orderPlaced}
+                    lowStockTime={item.lowStockTime}
+                    orderPlacedTime={item.orderPlacedTime}
+                    onStatusChange={(itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => 
+                      updateItemStatus(itemId, status, value)
+                    }
+                   />
                     <div>
                       <button 
                         onClick={() => handleUpdateLocation(item)}
@@ -244,7 +288,7 @@ const InventoryLayout = () => {
                         위치 변경
                       </button>
                       <button 
-                        onClick={() => handleDeleteItem(item.id)}
+                        onClick={() => handleDeleteItems([item.id])}
                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-200"
                       >
                         삭제

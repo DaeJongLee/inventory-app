@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { collection, addDoc } from 'firebase/firestore';
@@ -30,26 +32,19 @@ const AddItemModal: React.FC<AddItemModalProps> = ({ onClose, onAddItem, existin
     }
   }, [itemName, existingItems]);
 
-  useEffect(() => {
-    if (selectedLocation.sub === 'Red-' || selectedLocation.sub === 'Blue-') {
-      setSelectedLocation(prev => ({
-        ...prev,
-        final: prev.sub ? `${prev.sub.toLowerCase()}${prev.final || ''}` : prev.final
-      }));
-    }
-  }, [selectedLocation.sub, selectedLocation.final]);
-  
   const handleMainLocationSelect = (main: string) => {
     setSelectedLocation({ main, sub: '', final: '' });
-    const subLocs = locations.find(loc => loc.name === main)?.children?.map(child => child.name) || [];
+    const mainLocation = locations.find(loc => loc.id === main);
+    const subLocs = mainLocation?.children?.map(child => child.id) || [];
     setSubLocations(subLocs);
     setFinalLocations([]);
   };
 
   const handleSubLocationSelect = (sub: string) => {
     setSelectedLocation({ ...selectedLocation, sub, final: '' });
-    const mainLoc = locations.find(loc => loc.name === selectedLocation.main);
-    const finalLocs = mainLoc?.children?.find(child => child.name === sub)?.children?.map(child => child.name) || [];
+    const mainLocation = locations.find(loc => loc.id === selectedLocation.main);
+    const subLocation = mainLocation?.children?.find(child => child.id === sub);
+    const finalLocs = subLocation?.children?.map(child => child.id) || [];
     setFinalLocations(finalLocs);
   };
 
@@ -120,49 +115,55 @@ const AddItemModal: React.FC<AddItemModalProps> = ({ onClose, onAddItem, existin
             <label className="block text-sm font-medium text-gray-700">위치 선택</label>
             <div className="mt-2 space-y-2">
               <div className="flex space-x-2">
-                {mainLocations.map((loc) => (
+                {locations.map((loc) => (
                   <button
-                    key={loc}
+                    key={loc.id}
                     type="button"
-                    onClick={() => handleMainLocationSelect(loc)}
+                    onClick={() => handleMainLocationSelect(loc.id)}
                     className={`px-3 py-1 rounded ${
-                      selectedLocation.main === loc ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+                      selectedLocation.main === loc.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
                     }`}
                   >
-                    {loc}
+                    {loc.name}
                   </button>
                 ))}
               </div>
               {subLocations.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {subLocations.map((loc) => (
-                    <button
-                      key={loc}
-                      type="button"
-                      onClick={() => handleSubLocationSelect(loc)}
-                      className={`px-3 py-1 rounded ${
-                        selectedLocation.sub === loc ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-                      }`}
-                    >
-                      {loc}
-                    </button>
-                  ))}
+                  {subLocations.map((locId) => {
+                    const loc = locations.find(l => l.id === selectedLocation.main)?.children?.find(c => c.id === locId);
+                    return (
+                      <button
+                        key={locId}
+                        type="button"
+                        onClick={() => handleSubLocationSelect(locId)}
+                        className={`px-3 py-1 rounded ${
+                          selectedLocation.sub === locId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        {loc?.name || locId}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
               {finalLocations.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {finalLocations.map((loc) => (
-                    <button
-                      key={loc}
-                      type="button"
-                      onClick={() => handleFinalLocationSelect(loc)}
-                      className={`px-3 py-1 rounded ${
-                        selectedLocation.final === loc ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-                      }`}
-                    >
-                      {loc}
-                    </button>
-                  ))}
+                  {finalLocations.map((locId) => {
+                    const loc = locations.find(l => l.id === selectedLocation.main)?.children?.find(c => c.id === selectedLocation.sub)?.children?.find(f => f.id === locId);
+                    return (
+                      <button
+                        key={locId}
+                        type="button"
+                        onClick={() => handleFinalLocationSelect(locId)}
+                        className={`px-3 py-1 rounded ${
+                          selectedLocation.final === locId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        {loc?.name || locId}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -179,6 +180,5 @@ const AddItemModal: React.FC<AddItemModalProps> = ({ onClose, onAddItem, existin
       </div>
     </div>
   );
-};
-
+}
 export default AddItemModal;

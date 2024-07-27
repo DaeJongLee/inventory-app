@@ -15,15 +15,6 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
     final: item.location.final || ''
   });
 
-  useEffect(() => {
-    if (newLocation.sub === 'Red-' || newLocation.sub === 'Blue-') {
-      setNewLocation(prev => ({
-        ...prev,
-        final: prev.sub ? `${prev.sub.toLowerCase()}${prev.final || ''}` : prev.final
-      }));
-    }
-  }, [newLocation.sub, newLocation.final]);
-  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onLocationChange(item.id, newLocation);
@@ -84,7 +75,7 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
             >
               <option value="">최종 위치 선택</option>
               {locations.find(loc => loc.id === newLocation.main)?.children?.find(subLoc => subLoc.id === newLocation.sub)?.children?.map(finalLoc => (
-                <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.name}</option>
+                <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.id}</option>
               ))}
             </select>
           )}

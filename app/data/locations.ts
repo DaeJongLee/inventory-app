@@ -7,8 +7,8 @@ export const locations: Location[] = [
     children: [
       { id: 'red', name: 'Red-', 
         children: [
-          { id: 'red-a', name: 'A' },
-          { id: 'red-b', name: 'B' },
+          { id: 'red-a', name: 'red-a' },
+          { id: 'red-b', name: 'red-b' },
           { id: 'red-1', name: '1' },
           { id: 'red-2', name: '2' },
           { id: 'red-3', name: '3' },
@@ -18,8 +18,8 @@ export const locations: Location[] = [
       },
       { id: 'blue', name: 'Blue-', 
         children: [
-          { id: 'blue-a', name: 'A' },
-          { id: 'blue-b', name: 'B' },
+          { id: 'blue-a', name: 'blue-a' },
+          { id: 'blue-b', name: 'blue-B' },
           { id: 'blue-1', name: '1' },
           { id: 'blue-2', name: '2' }
         ]
