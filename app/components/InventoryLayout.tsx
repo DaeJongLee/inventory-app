@@ -152,7 +152,6 @@ const InventoryLayout = () => {
       console.error(`Error updating item ${itemId} ${status}:`, error);
     }
   };
-
   const renderInventoryLayout = () => (
     <div className="grid grid-cols-3 gap-4">
       {/* 조제실 레이아웃 */}
