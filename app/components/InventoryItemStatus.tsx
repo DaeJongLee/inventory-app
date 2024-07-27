@@ -9,9 +9,8 @@ interface InventoryItemStatusProps {
   orderPlacedTime: string | null;
   onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
 }
-
 const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({ 
-  itemId,  // 'id'를 'itemId'로 변경
+  itemId,
   lowStock, 
   orderPlaced,
   lowStockTime,
@@ -27,16 +26,22 @@ const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({
   return (
     <div className="flex flex-col space-y-2">
       <div className="flex items-center space-x-2">
-        <button onClick={() => onStatusChange(itemId, 'lowStock', !lowStock)} className="flex items-center">
-          {lowStock ? <CheckSquare className="text-red-500" /> : <Square />}
-          <span className="ml-1">부족</span>
+        <button 
+          onClick={() => onStatusChange(itemId, 'lowStock', !lowStock)} 
+          className={`flex items-center px-2 py-1 rounded ${lowStock ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'} hover:bg-opacity-80 transition duration-200`}
+        >
+          {lowStock ? <CheckSquare className="mr-1" size={16} /> : <Square className="mr-1" size={16} />}
+          <span className="text-sm">부족</span>
         </button>
         {lowStockTime && <span className="text-xs text-gray-500">{formatTime(lowStockTime)}</span>}
       </div>
       <div className="flex items-center space-x-2">
-        <button onClick={() => onStatusChange(itemId, 'orderPlaced', !orderPlaced)} className="flex items-center">
-          {orderPlaced ? <CheckSquare className="text-green-500" /> : <Square />}
-          <span className="ml-1">주문완료</span>
+        <button 
+          onClick={() => onStatusChange(itemId, 'orderPlaced', !orderPlaced)} 
+          className={`flex items-center px-2 py-1 rounded ${orderPlaced ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'} hover:bg-opacity-80 transition duration-200`}
+        >
+          {orderPlaced ? <CheckSquare className="mr-1" size={16} /> : <Square className="mr-1" size={16} />}
+          <span className="text-sm">주문완료</span>
         </button>
         {orderPlacedTime && <span className="text-xs text-gray-500">{formatTime(orderPlacedTime)}</span>}
       </div>

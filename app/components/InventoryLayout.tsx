@@ -21,7 +21,7 @@ const InventoryLayout = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [visibleSections, setVisibleSections] = useState({
+  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({
     preparation: true,
     sales: true,
     storage: true
@@ -152,139 +152,124 @@ const InventoryLayout = () => {
   };
 
   return (
-    <div className="flex max-w-6xl mx-auto p-4">
-      <div className="w-1/2 pr-4">
-        <h1 className="text-2xl font-bold mb-4">재고 레이아웃</h1>
-        
-        <form onSubmit={handleSearch} className="mb-4">
-          <div className="flex flex-col">
+    <div className="max-w-7xl mx-auto p-6 bg-gray-50">
+      <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 레이아웃</h2>
+          
+          <form onSubmit={handleSearch} className="mb-6">
             <div className="flex">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="아이템 검색..."
-                className="flex-grow p-2 border rounded-l"
+                className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <button type="submit" className="bg-blue-500 text-white p-2 rounded-r" disabled={isLoading}>
-                {isLoading ? 'Loading...' : <Search size={20} />}
+              <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
+                {isLoading ? '로딩 중...' : <Search size={20} />}
               </button>
             </div>
-            {suggestions.length > 0 && (
-              <ul className="mt-2 border rounded">
-                {suggestions.map((suggestion, index) => (
-                  <li 
-                    key={index} 
-                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => {
-                      setSearchTerm(suggestion);
-                      setSuggestions([]);
-                    }}
-                  >
-                    {suggestion}
-                  </li>
+          </form>
+
+          <div className="flex space-x-2 mb-4">
+            {[
+              { key: 'preparation', label: '조제실' },
+              { key: 'sales', label: '판매 구역' },
+              { key: 'storage', label: '집하장' }
+            ].map(({ key, label }) => (
+              <button 
+                key={key}
+                onClick={() => setVisibleSections(prev => ({ ...prev, [key]: !prev[key] }))} 
+                className={`px-3 py-1 rounded ${visibleSections[key] ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+              >
+                {visibleSections[key] ? `${label} 숨기기` : `${label} 보기`}
+              </button>
+            ))}
+          </div>
+
+          <InventoryLayoutMain 
+            visibleSections={visibleSections}
+            handleSectionClick={handleSectionClick}
+            highlightedLocation={highlightedLocation}
+          />
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-gray-700">
+              {selectedSection ? `${selectedSection} 아이템 목록` : '검색 결과'}
+            </h2>
+            <button 
+              onClick={() => setIsAddItemModalOpen(true)} 
+              className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
+            >
+              <PlusCircle size={20} className="mr-2" />
+              아이템 추가
+            </button>
+          </div>
+          
+          <InventoryStatusLists items={items} />
+          
+          <ul className="space-y-4 mt-4">
+            {displayedItems.map((item) => (
+              <li key={item.id} className="border p-4 rounded-lg hover:shadow-md transition duration-200">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="font-semibold text-lg">{item.name}</span>
+                    <div className="text-sm text-gray-600 flex items-center mt-1">
+                      <MapPin size={16} className="mr-1" />
+                      <span>{getLocationName(item.location)}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <InventoryItemStatus 
+                      itemId={item.id}
+                      lowStock={item.lowStock}
+                      orderPlaced={item.orderPlaced}
+                      lowStockTime={item.lowStockTime}
+                      orderPlacedTime={item.orderPlacedTime}
+                      onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
+                    />
+                    <div>
+                      <button 
+                        onClick={() => handleUpdateLocation(item)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600 transition duration-200"
+                      >
+                        위치 변경
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteItem(item.id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-200"
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+          
+          {selectedSection && (
+            <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+              <h3 className="text-lg font-semibold flex items-center text-gray-700">
+                <Info className="mr-2" />
+                {selectedSection} 정보
+              </h3>
+              <p className="mt-2 text-gray-600">
+                {locations.find(loc => loc.id.toLowerCase() === selectedSection.toLowerCase())?.name || '정보 없음'}
+              </p>
+              <ul className="mt-2 list-disc list-inside">
+                {displayedItems.map(item => (
+                  <li key={item.id} className="text-gray-600">{item.name}</li>
                 ))}
               </ul>
-            )}
-          </div>
-        </form>
-
-        <button 
-          onClick={() => setVisibleSections(prev => ({ ...prev, preparation: !prev.preparation }))} 
-          className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
-        >
-          {visibleSections.preparation ? '조제실 숨기기' : '조제실 보기'}
-        </button>
-
-        <button 
-          onClick={() => setVisibleSections(prev => ({ ...prev, sales: !prev.sales }))} 
-          className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
-        >
-          {visibleSections.sales ? '판매 구역 숨기기' : '판매 구역 보기'}
-        </button>
-
-        <button 
-          onClick={() => setVisibleSections(prev => ({ ...prev, storage: !prev.storage }))} 
-          className="mb-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
-        >
-          {visibleSections.storage ? '집하장 숨기기' : '집하장 보기'}
-        </button>
-
-        <InventoryLayoutMain 
-          visibleSections={visibleSections}
-          handleSectionClick={handleSectionClick}
-          highlightedLocation={highlightedLocation}
-        />
-      </div>
-      
-      <div className="w-1/2 pl-4">
-        <InventoryStatusLists items={items} />
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">
-            {selectedSection ? `${selectedSection} 아이템 목록` : '검색 결과'}
-          </h2>
-          <button 
-            onClick={() => setIsAddItemModalOpen(true)} 
-            className="bg-green-500 text-white p-2 rounded flex items-center"
-          >
-            <PlusCircle size={20} className="mr-2" />
-            아이템 추가
-          </button>
+            </div>
+          )}
         </div>
-        <ul className="space-y-2">
-          {displayedItems.map((item) => (
-            <li key={item.id} className="flex items-center justify-between p-2 bg-gray-100 rounded">
-              <div>
-                <span className="font-semibold">{item.name}</span>
-                <div className="text-sm text-gray-600 flex items-center mt-1">
-                  <MapPin size={16} className="mr-1" />
-                  <span>{getLocationName(item.location)}</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <InventoryItemStatus 
-                  itemId={item.id}
-                  lowStock={item.lowStock}
-                  orderPlaced={item.orderPlaced}
-                  lowStockTime={item.lowStockTime}
-                  orderPlacedTime={item.orderPlacedTime}
-                  onStatusChange={(itemId, status, value) => updateItemStatus(itemId, status as 'lowStock' | 'orderPlaced', value)}
-                />
-                <div>
-                  <button 
-                    onClick={() => handleUpdateLocation(item)}
-                    className="bg-blue-500 text-white p-1 rounded mr-2"
-                  >
-                    위치 변경
-                  </button>
-                  <button 
-                    onClick={() => handleDeleteItem(item.id)}
-                    className="bg-red-500 text-white p-1 rounded"
-                  >
-                    삭제
-                  </button>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-        
-        {selectedSection && (
-          <div className="mt-4 p-4 border rounded">
-            <h3 className="text-lg font-semibold flex items-center">
-              <Info className="mr-2" />
-              {selectedSection} 정보
-            </h3>
-            <p className="mt-2">
-              {locations.find(loc => loc.id.toLowerCase() === selectedSection.toLowerCase())?.name || '정보 없음'}
-            </p>
-            <ul className="mt-2">
-              {displayedItems.map(item => (
-                <li key={item.id}>{item.name}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
 
       {isModalOpen && selectedItem && (
