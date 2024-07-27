@@ -11,11 +11,11 @@ const SalesLayout: React.FC<SalesLayoutProps> = ({ handleSectionClick, highlight
     <h3 className="text-lg font-semibold mb-2">판매 구역</h3>
     <div className="grid grid-cols-1 gap-2">
       <div className="grid grid-cols-5 gap-1">
-        <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-A'} />
-        <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-B'} />
+        <LocationButton id="Red-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'A'} />
+        <LocationButton id="Red-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'B'} />
         <div></div>
-        <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-A'} />
-        <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Blue-B'} />
+        <LocationButton id="Blue-A" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'A'} />
+        <LocationButton id="Blue-B" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'B'} />
       </div>
       <div className="grid grid-cols-3 gap-1">
         <LocationButton id="Red-1" onClick={handleSectionClick} isHighlighted={highlightedLocation === 'Red-1'} />
