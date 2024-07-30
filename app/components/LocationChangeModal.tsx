@@ -2,22 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Item, Location, ItemLocation } from '../types/types';
 
 interface LocationChangeModalProps {
+  isOpen: boolean;
   item: Item;
   onClose: () => void;
-  onLocationChange: (itemId: string, newLocation: ItemLocation) => void;
+  onSave: (itemId: string, newLocation: ItemLocation) => void;
   locations: Location[];
 }
 
-const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose, onLocationChange, locations }) => {
-  const [newLocation, setNewLocation] = useState<ItemLocation>({
-    main: item.location.main || '',
-    sub: item.location.sub || '',
-    final: item.location.final || ''
-  });
+const LocationChangeModal: React.FC<LocationChangeModalProps> = ({
+  isOpen,
+  item,
+  onClose,
+  onSave,
+  locations
+}) => {
+  const [newLocation, setNewLocation] = useState<ItemLocation>(item.location);
+
+  useEffect(() => {
+    setNewLocation(item.location);
+  }, [item]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLocationChange(item.id, newLocation);
+    onSave(item.id, newLocation);
+    onClose();
   };
 
   const getLocationName = (location: ItemLocation) => {
@@ -38,6 +46,8 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
 
     return `${mainName}${subName}${finalName}`;
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -75,7 +85,7 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({ item, onClose
             >
               <option value="">최종 위치 선택</option>
               {locations.find(loc => loc.id === newLocation.main)?.children?.find(subLoc => subLoc.id === newLocation.sub)?.children?.map(finalLoc => (
-                <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.id}</option>
+                <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.name}</option>
               ))}
             </select>
           )}

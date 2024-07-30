@@ -7,14 +7,19 @@ import { db } from '../firebase';
 import { Item, ItemLocation, Location } from '../types/types';
 
 interface AddItemModalProps {
+  isOpen: boolean;
   onClose: () => void;
   onAddItem: (newItem: Item) => void;
   existingItems: Item[];
   locations: Location[];
 }
-
-const AddItemModal: React.FC<AddItemModalProps> = ({ onClose, onAddItem, existingItems, locations }) => {
-  const [itemName, setItemName] = useState('');
+const AddItemModal: React.FC<AddItemModalProps> = ({
+  isOpen,
+  onClose,
+  onAddItem,
+  existingItems,
+  locations
+}) => {  const [itemName, setItemName] = useState('');
   const [similarItems, setSimilarItems] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<ItemLocation>({ main: '', sub: '', final: '' });
   const [mainLocations, setMainLocations] = useState<string[]>(['판매구역', '조제실', '집하장']);
