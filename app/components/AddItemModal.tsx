@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Item, ItemLocation, Location } from '../types/types';
+import { Item, ItemLocation, StorageLocation, Location } from '../types/types';
 
 interface AddItemModalProps {
   isOpen: boolean;
@@ -13,18 +13,18 @@ interface AddItemModalProps {
   existingItems: Item[];
   locations: Location[];
 }
+
 const AddItemModal: React.FC<AddItemModalProps> = ({
   isOpen,
   onClose,
   onAddItem,
   existingItems,
   locations
-}) => {  const [itemName, setItemName] = useState('');
+}) => {
+  const [itemName, setItemName] = useState('');
   const [similarItems, setSimilarItems] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<ItemLocation>({ main: '', sub: '', final: '' });
-  const [mainLocations, setMainLocations] = useState<string[]>(['판매구역', '조제실', '집하장']);
-  const [subLocations, setSubLocations] = useState<string[]>([]);
-  const [finalLocations, setFinalLocations] = useState<string[]>([]);
+  const [selectedStorageLocation, setSelectedStorageLocation] = useState<StorageLocation>({ storageMain: '', storageSub: '', storageFinal: '' });
 
   useEffect(() => {
     if (itemName.length > 1) {
@@ -37,24 +37,30 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
     }
   }, [itemName, existingItems]);
 
-  const handleMainLocationSelect = (main: string) => {
-    setSelectedLocation({ main, sub: '', final: '' });
-    const mainLocation = locations.find(loc => loc.id === main);
-    const subLocs = mainLocation?.children?.map(child => child.id) || [];
-    setSubLocations(subLocs);
-    setFinalLocations([]);
+  const handleLocationSelect = (locationType: 'main' | 'sub' | 'final', value: string) => {
+    setSelectedLocation(prev => {
+      const newLocation = { ...prev, [locationType]: value };
+      if (locationType === 'main') {
+        newLocation.sub = '';
+        newLocation.final = '';
+      } else if (locationType === 'sub') {
+        newLocation.final = '';
+      }
+      return newLocation;
+    });
   };
 
-  const handleSubLocationSelect = (sub: string) => {
-    setSelectedLocation({ ...selectedLocation, sub, final: '' });
-    const mainLocation = locations.find(loc => loc.id === selectedLocation.main);
-    const subLocation = mainLocation?.children?.find(child => child.id === sub);
-    const finalLocs = subLocation?.children?.map(child => child.id) || [];
-    setFinalLocations(finalLocs);
-  };
-
-  const handleFinalLocationSelect = (final: string) => {
-    setSelectedLocation({ ...selectedLocation, final });
+  const handleStorageLocationSelect = (locationType: 'storageMain' | 'storageSub' | 'storageFinal', value: string) => {
+    setSelectedStorageLocation(prev => {
+      const newLocation = { ...prev, [locationType]: value };
+      if (locationType === 'storageMain') {
+        newLocation.storageSub = '';
+        newLocation.storageFinal = '';
+      } else if (locationType === 'storageSub') {
+        newLocation.storageFinal = '';
+      }
+      return newLocation;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,6 +75,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
         id: '', // 이 부분은 Firebase에서 자동 생성됩니다.
         name: itemName,
         location: selectedLocation,
+        storageLocation: selectedStorageLocation,
         lowStock: false,
         orderPlaced: false,
         lowStockTime: null,
@@ -86,7 +93,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? '' : 'hidden'}`}>
       <div className="bg-white p-6 rounded-lg max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">새 아이템 추가</h2>
@@ -119,71 +126,95 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">위치 선택</label>
             <div className="mt-2 space-y-2">
-              <div className="flex space-x-2">
+              <select
+                value={selectedLocation.main}
+                onChange={(e) => handleLocationSelect('main', e.target.value)}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">주 위치 선택</option>
                 {locations.map((loc) => (
-                  <button
-                    key={loc.id}
-                    type="button"
-                    onClick={() => handleMainLocationSelect(loc.id)}
-                    className={`px-3 py-1 rounded ${
-                      selectedLocation.main === loc.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-                    }`}
-                  >
-                    {loc.name}
-                  </button>
+                  <option key={loc.id} value={loc.id}>{loc.name}</option>
                 ))}
-              </div>
-              {subLocations.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {subLocations.map((locId) => {
-                    const loc = locations.find(l => l.id === selectedLocation.main)?.children?.find(c => c.id === locId);
-                    return (
-                      <button
-                        key={locId}
-                        type="button"
-                        onClick={() => handleSubLocationSelect(locId)}
-                        className={`px-3 py-1 rounded ${
-                          selectedLocation.sub === locId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-                        }`}
-                      >
-                        {loc?.name || locId}
-                      </button>
-                    );
-                  })}
-                </div>
+              </select>
+              {selectedLocation.main && (
+                <select
+                  value={selectedLocation.sub}
+                  onChange={(e) => handleLocationSelect('sub', e.target.value)}
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="">세부 위치 선택</option>
+                  {locations.find(loc => loc.id === selectedLocation.main)?.children?.map((subLoc) => (
+                    <option key={subLoc.id} value={subLoc.id}>{subLoc.name}</option>
+                  ))}
+                </select>
               )}
-              {finalLocations.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {finalLocations.map((locId) => {
-                    const loc = locations.find(l => l.id === selectedLocation.main)?.children?.find(c => c.id === selectedLocation.sub)?.children?.find(f => f.id === locId);
-                    return (
-                      <button
-                        key={locId}
-                        type="button"
-                        onClick={() => handleFinalLocationSelect(locId)}
-                        className={`px-3 py-1 rounded ${
-                          selectedLocation.final === locId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-                        }`}
-                      >
-                        {loc?.name || locId}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+              {selectedLocation.sub && (
+                <select
+                  value={selectedLocation.final}
+                  onChange={(e) => handleLocationSelect('final', e.target.value)}
+                  className="w-full p-2 border rounded"
+                >
+                 <option value="">최종 위치 선택</option>
+                {locations.find(loc => loc.id === selectedLocation.main)?.children
+                  ?.find(subLoc => subLoc.id === selectedLocation.sub)?.children?.map((finalLoc) => (
+                    <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.name}</option>
+                  ))}
+              </select>
+            )}
           </div>
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">보관 위치 선택</label>
+          <div className="mt-2 space-y-2">
+            <select
+              value={selectedStorageLocation.storageMain}
+              onChange={(e) => handleStorageLocationSelect('storageMain', e.target.value)}
+              className="w-full p-2 border rounded"
             >
-              추가
-            </button>
+              <option value="">주 보관 위치 선택</option>
+              {locations.map((loc) => (
+                <option key={loc.id} value={loc.id}>{loc.name}</option>
+              ))}
+            </select>
+            {selectedStorageLocation.storageMain && (
+              <select
+                value={selectedStorageLocation.storageSub}
+                onChange={(e) => handleStorageLocationSelect('storageSub', e.target.value)}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">세부 보관 위치 선택</option>
+                {locations.find(loc => loc.id === selectedStorageLocation.storageMain)?.children?.map((subLoc) => (
+                  <option key={subLoc.id} value={subLoc.id}>{subLoc.name}</option>
+                ))}
+              </select>
+            )}
+            {selectedStorageLocation.storageSub && (
+              <select
+                value={selectedStorageLocation.storageFinal}
+                onChange={(e) => handleStorageLocationSelect('storageFinal', e.target.value)}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">최종 보관 위치 선택</option>
+                {locations.find(loc => loc.id === selectedStorageLocation.storageMain)?.children
+                  ?.find(subLoc => subLoc.id === selectedStorageLocation.storageSub)?.children?.map((finalLoc) => (
+                    <option key={finalLoc.id} value={finalLoc.id}>{finalLoc.name}</option>
+                  ))}
+              </select>
+            )}
           </div>
-        </form>
-      </div>
+        </div>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            추가
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
   );
 }
+
 export default AddItemModal;

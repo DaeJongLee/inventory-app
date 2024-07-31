@@ -3,13 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useInventory } from '../hooks/useInventory';
 import { Search, PlusCircle } from 'lucide-react';
-import { Item, ItemLocation } from '../types/types';
+import { Item, ItemLocation, StorageLocation } from '../types/types';
 import LocationChangeModal from './LocationChangeModal';
 import AddItemModal from './AddItemModal';
 import InventoryLayoutMain from './layouts/InventoryLayoutMain';
 import InventoryTable from './InventoryTable';
 import { locations } from '../data/locations';
-
 
 const InventoryLayout: React.FC = () => {
   const { items, isLoading, updateItems } = useInventory();
@@ -34,10 +33,14 @@ const InventoryLayout: React.FC = () => {
     setSelectedSection(section);
     const sectionItems = items.filter((item) => {
       const location = item.location;
+      const storageLocation = item.storageLocation;
       return (
         location.main?.toLowerCase() === section.toLowerCase() ||
         location.sub?.toLowerCase() === section.toLowerCase() ||
-        location.final?.toLowerCase() === section.toLowerCase()
+        location.final?.toLowerCase() === section.toLowerCase() ||
+        storageLocation.storageMain?.toLowerCase() === section.toLowerCase() ||
+        storageLocation.storageSub?.toLowerCase() === section.toLowerCase() ||
+        storageLocation.storageFinal?.toLowerCase() === section.toLowerCase()
       );
     });
     setDisplayedItems(sectionItems);
@@ -49,13 +52,20 @@ const InventoryLayout: React.FC = () => {
     const searchTerms = searchTerm.toLowerCase().split(' ');
     const results = items.filter((item) => {
       const itemName = item.name.toLowerCase();
-      return searchTerms.every((term) => itemName.includes(term));
+      const locationString = `${item.location.main} ${item.location.sub} ${item.location.final}`.toLowerCase();
+      const storageLocationString = `${item.storageLocation.storageMain} ${item.storageLocation.storageSub} ${item.storageLocation.storageFinal}`.toLowerCase();
+      return searchTerms.every((term) => 
+        itemName.includes(term) || 
+        locationString.includes(term) || 
+        storageLocationString.includes(term)
+      );
     });
     setDisplayedItems(results);
     setSelectedSection(null);
     if (results.length > 0) {
       setHighlightedLocation(
-        results[0].location.final || results[0].location.sub || results[0].location.main
+        results[0].location.final || results[0].location.sub || results[0].location.main ||
+        results[0].storageLocation.storageFinal || results[0].storageLocation.storageSub || results[0].storageLocation.storageMain
       );
     }
   };
@@ -65,9 +75,9 @@ const InventoryLayout: React.FC = () => {
     setIsLocationModalOpen(true);
   };
 
-  const handleLocationChange = async (itemId: string, newLocation: ItemLocation) => {
+  const handleLocationChange = async (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => {
     const updatedItems = items.map((item) =>
-      item.id === itemId ? { ...item, location: newLocation } : item
+      item.id === itemId ? { ...item, location: newLocation, storageLocation: newStorageLocation } : item
     );
     await updateItems(updatedItems);
     setIsLocationModalOpen(false);

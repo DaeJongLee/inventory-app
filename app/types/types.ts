@@ -10,11 +10,17 @@ export interface ItemLocation {
   final?: string;
 }
 
+export interface StorageLocation {
+  storageMain: string;
+  storageSub: string;
+  storageFinal: string;
+}
 
 export interface Item {
   id: string;
   name: string;
   location: ItemLocation;
+  storageLocation: StorageLocation;
   lowStock: boolean;
   orderPlaced: boolean;
   lowStockTime: string | null;
