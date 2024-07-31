@@ -38,3 +38,4 @@ node_modules
 .next
 /scripts/serviceAccountKey.json
 .venv/
+/json
