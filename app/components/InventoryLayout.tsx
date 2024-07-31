@@ -92,20 +92,23 @@ const InventoryLayout: React.FC = () => {
 
   const handleAddItem = async (newItem: Item) => {
     try {
-      await updateItems([...items, newItem]);
-      setIsAddItemModalOpen(false);  // 모달을 닫습니다.
+      const updatedItems = [...items, newItem];
+      await updateItems(updatedItems);
+      setDisplayedItems(updatedItems);
+      setIsAddItemModalOpen(false);
     } catch (error) {
       console.error("Error adding new item:", error);
-      // 오류 메시지를 사용자에게 표시할 수 있습니다.
     }
   };
+
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
+      <div className="grid grid-cols-[3.5fr,6.5fr] gap-2">
       
       {/* 재고 위치 */}
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 위치</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-gray-700"></h2>
         <div className="flex space-x-2 mb-4">
           {['preparation', 'sales', 'storage'].map((key) => (
             <button 
@@ -124,64 +127,39 @@ const InventoryLayout: React.FC = () => {
         />
       </div>
   
-      {/* 2열 그리드 레이아웃 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* 왼쪽 열: 재고 부족 리스트와 주문 완료 리스트 */}
-        <div className="space-y-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 부족 리스트</h2>
-            <InventoryTable 
-              items={items.filter(item => item.lowStock)}
-              onStatusChange={updateItemStatus}
-              onUpdateLocation={handleUpdateLocation}
-              onDeleteItem={handleDeleteItem}
-            />
-          </div>
-          
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-700">주문 완료 리스트</h2>
-            <InventoryTable 
-              items={items.filter(item => item.orderPlaced)}
-              onStatusChange={updateItemStatus}
-              onUpdateLocation={handleUpdateLocation}
-              onDeleteItem={handleDeleteItem}
-            />
-          </div>
+      {/* 검색 및 아이템 목록 */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
+          <button 
+            onClick={() => setIsAddItemModalOpen(true)} 
+            className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
+          >
+            <PlusCircle size={20} className="mr-2" />
+            아이템 추가
+          </button>
         </div>
-  
-        {/* 오른쪽 열: 검색 결과 */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold text-gray-700">검색 결과</h2>
-            <button 
-              onClick={() => setIsAddItemModalOpen(true)} 
-              className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
-            >
-              <PlusCircle size={20} className="mr-2" />
-              아이템 추가
+        <form onSubmit={handleSearch} className="mb-6">
+          <div className="flex">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="아이템 검색..."
+              className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
+              {isLoading ? '로딩 중...' : <Search size={20} />}
             </button>
           </div>
-          <form onSubmit={handleSearch} className="mb-6">
-            <div className="flex">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="아이템 검색..."
-                className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
-                {isLoading ? '로딩 중...' : <Search size={20} />}
-              </button>
-            </div>
-          </form>
-          <InventoryTable 
-            items={displayedItems}
-            onStatusChange={updateItemStatus}
-            onUpdateLocation={handleUpdateLocation}
-            onDeleteItem={handleDeleteItem}
-          />
-        </div>
+        </form>
+        <InventoryTable 
+          items={displayedItems}
+          onStatusChange={updateItemStatus}
+          onUpdateLocation={handleUpdateLocation}
+          onDeleteItem={handleDeleteItem}
+          locations={locations}
+        />
       </div>
   
       {selectedItem && (
@@ -203,6 +181,8 @@ const InventoryLayout: React.FC = () => {
         />
       )}
     </div>
+    </div>
   );
 }
+
 export default InventoryLayout;
