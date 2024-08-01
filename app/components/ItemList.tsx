@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Item, ItemLocation } from '../types/types';
+import { Item, ItemLocation, StorageLocation, Location } from '../types/types';
 import { locations } from '../data/locations';
 import LocationChangeModal from './LocationChangeModal';
 import InventoryItemStatus from './InventoryItemStatus';
@@ -89,16 +89,18 @@ const ItemList = () => {
     setIsModalOpen(true);
   };
 
-  const handleLocationChange = async (itemId: string, newLocation: ItemLocation) => {
+  const handleLocationChange = async (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => {
     try {
-      await updateDoc(doc(db, 'items', itemId), { location: newLocation });
+      await updateDoc(doc(db, 'items', itemId), { 
+        location: newLocation,
+        storageLocation: newStorageLocation
+      });
       setIsModalOpen(false);
       setSelectedItem(null);
     } catch (error) {
       console.error("Error updating item location:", error);
     }
   };
-
   const handleDeleteItem = async (itemId: string) => {
     if (window.confirm('정말로 이 아이템을 삭제하시겠습니까?')) {
       try {
@@ -240,32 +242,25 @@ const ItemList = () => {
         
         {renderPagination(displayedItems.length)}
 
-        {selectedSection && (
-          <div className="mt-4 p-4 border rounded">
-            <h3 className="text-lg font-semibold flex items-center">
-              <Info className="mr-2" />
-              {selectedSection} 정보
-            </h3>
-            <p className="mt-2">
-              {locations.find(loc => loc.id.toLowerCase() === selectedSection.toLowerCase())?.name || '정보 없음'}
-            </p>
-            <ul className="mt-2">
-              {paginatedDisplayedItems.map(item => (
-                <li key={item.id}>{item.name}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {selectedItem && (
+  <LocationChangeModal 
+    isOpen={isModalOpen} 
+    item={selectedItem}
+    onClose={() => setIsModalOpen(false)}
+    onSave={handleLocationChange}
+    locations={locations}
+  />
+)}
       </div>
-
       {isModalOpen && selectedItem && (
-        <LocationChangeModal
-          item={selectedItem}
-          onClose={() => setIsModalOpen(false)}
-          onLocationChange={handleLocationChange}
-          locations={locations}
-        />
-      )}
+  <LocationChangeModal
+    isOpen={isModalOpen}
+    item={selectedItem}
+    onClose={() => setIsModalOpen(false)}
+    onSave={handleLocationChange}
+    locations={locations}
+  />
+)}
       
     </div>
   );
