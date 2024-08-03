@@ -4,10 +4,10 @@ import { Edit, Trash2, CheckSquare, Square, Repeat } from 'lucide-react';
 
 interface InventoryTableProps {
   items: Item[];
-  onUpdateLocation: (item: Item) => void;
+  onUpdateLocation: (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => void;
   onDeleteItem: (itemId: string) => void;
   onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
-  onSwapLocations: (item: Item) => void;
+  onSwapLocations: (itemId: string) => void;
   locations: Location[];
 }
 
@@ -32,14 +32,12 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
     };
   
     if ('storageMain' in location) {
-      // This is a StorageLocation
       const { storageMain, storageSub, storageFinal } = location;
       const mainName = findLocationName(locations, storageMain) || storageMain;
       const subName = storageSub ? findLocationName(locations, storageSub) || storageSub : '';
       const finalName = storageFinal ? findLocationName(locations, storageFinal) || storageFinal : '';
       return `${mainName}${subName ? ` / ${subName}` : ''}${finalName ? ` / ${finalName}` : ''}`;
     } else {
-      // This is an ItemLocation
       const { main, sub, final } = location;
       const mainName = findLocationName(locations, main) || main;
       const subName = sub ? findLocationName(locations, sub) || sub : '';
@@ -71,37 +69,27 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
               <td className="py-2 px-4">{getLocationName(item.storageLocation)}</td>
               <td className="py-2 px-4 text-center">
                 <button 
-                  onClick={() => onUpdateLocation(item)} 
+                  onClick={() => onUpdateLocation(item.id, item.location, item.storageLocation)} 
                   className="text-blue-500 hover:text-blue-700"
-                  title="위치 변경"
                 >
                   <Edit size={18} />
                 </button>
               </td>
               <td className="py-2 px-4 text-center">
                 <button 
-                  onClick={() => onSwapLocations(item)} 
+                  onClick={() => onSwapLocations(item.id)} 
                   className="text-green-500 hover:text-green-700"
-                  title="판매 위치와 보관 위치 교환"
                 >
                   <Repeat size={18} />
                 </button>
               </td>
               <td className="py-2 px-4 text-center">
-                <button 
-                  onClick={() => onStatusChange(item.id, 'lowStock', !item.lowStock)}
-                  className={`p-1 rounded ${item.lowStock ? 'bg-red-100' : ''}`}
-                  title={item.lowStock ? '재고 부족 해제' : '재고 부족 설정'}
-                >
+                <button onClick={() => onStatusChange(item.id, 'lowStock', !item.lowStock)}>
                   {item.lowStock ? <CheckSquare className="text-red-500" /> : <Square />}
                 </button>
               </td>
               <td className="py-2 px-4 text-center">
-                <button 
-                  onClick={() => onStatusChange(item.id, 'orderPlaced', !item.orderPlaced)}
-                  className={`p-1 rounded ${item.orderPlaced ? 'bg-green-100' : ''}`}
-                  title={item.orderPlaced ? '주문 완료 해제' : '주문 완료 설정'}
-                >
+                <button onClick={() => onStatusChange(item.id, 'orderPlaced', !item.orderPlaced)}>
                   {item.orderPlaced ? <CheckSquare className="text-green-500" /> : <Square />}
                 </button>
               </td>
@@ -109,7 +97,6 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
                 <button 
                   onClick={() => onDeleteItem(item.id)} 
                   className="text-red-500 hover:text-red-700"
-                  title="항목 삭제"
                 >
                   <Trash2 size={18} />
                 </button>
@@ -120,6 +107,5 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       </table>
     </div>
   );
-};
-
+}
 export default InventoryTable;

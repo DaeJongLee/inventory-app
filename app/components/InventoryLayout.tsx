@@ -72,9 +72,12 @@ const InventoryLayout: React.FC = () => {
     }
   };
 
-  const handleUpdateLocation = (item: Item) => {
-    setSelectedItem(item);
-    setIsLocationModalOpen(true);
+  const handleUpdateLocation = (itemId: string) => {
+    const item = items.find(item => item.id === itemId);
+    if (item) {
+      setSelectedItem(item);
+      setIsLocationModalOpen(true);
+    }
   };
 
   const handleLocationChange = async (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => {
@@ -84,6 +87,35 @@ const InventoryLayout: React.FC = () => {
     await updateItems(updatedItems);
     setIsLocationModalOpen(false);
     setSelectedItem(null);
+  };
+
+  const convertToItemLocation = (location: StorageLocation): ItemLocation => {
+    return {
+      main: location.storageMain,
+      sub: location.storageSub || undefined,
+      final: location.storageFinal || undefined
+    };
+  };
+
+  const convertToStorageLocation = (location: ItemLocation): StorageLocation => {
+    return {
+      storageMain: location.main,
+      storageSub: location.sub || '',
+      storageFinal: location.final || ''
+    };
+  };
+
+  const handleSwapLocations = async (itemId: string) => {
+    const item = items.find(item => item.id === itemId);
+    if (item) {
+      const updatedItem = {
+        ...item,
+        location: convertToItemLocation(item.storageLocation),
+        storageLocation: convertToStorageLocation(item.location)
+      };
+      const updatedItems = items.map(i => i.id === itemId ? updatedItem : i);
+      await updateItems(updatedItems);
+    }
   };
 
   const updateItemStatus = async (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => {
@@ -111,31 +143,6 @@ const InventoryLayout: React.FC = () => {
     } catch (error) {
       console.error("Error adding new item:", error);
     }
-  };
-
-  const convertToItemLocation = (location: StorageLocation): ItemLocation => {
-    return {
-      main: location.storageMain,
-      sub: location.storageSub,
-      final: location.storageFinal
-    };
-  };
-
-  const convertToStorageLocation = (location: ItemLocation): StorageLocation => {
-    return {
-      storageMain: location.main,
-      storageSub: location.sub || '',
-      storageFinal: location.final || ''
-    };
-  };
-
-  const handleSwapLocations = (item: Item) => {
-    const updatedItem = {
-      ...item,
-      location: convertToItemLocation(item.storageLocation),
-      storageLocation: convertToStorageLocation(item.location)
-    };
-    handleUpdateLocation(updatedItem);
   };
 
   const filteredItems = displayedItems.filter(item => 
@@ -218,27 +225,25 @@ const InventoryLayout: React.FC = () => {
           locations={locations}
         />
       </div>
-  
-      {selectedItem && (
-        <LocationChangeModal 
-          isOpen={isLocationModalOpen} 
-          item={selectedItem} 
-          onClose={() => setIsLocationModalOpen(false)}
-          onSave={handleLocationChange}
-          locations={locations}
-        />
-      )}
-      {isAddItemModalOpen && (
-        <AddItemModal 
-          isOpen={isAddItemModalOpen} 
-          onClose={() => setIsAddItemModalOpen(false)}
-          onAddItem={handleAddItem}
-          existingItems={items}
-          locations={locations}
-        />
-      )}
     </div>
-    </div>
+    
+    {selectedItem && (
+      <LocationChangeModal 
+        isOpen={isLocationModalOpen} 
+        item={selectedItem} 
+        onClose={() => setIsLocationModalOpen(false)}
+        onSave={handleLocationChange}
+        locations={locations}
+      />
+    )}
+    <AddItemModal 
+      isOpen={isAddItemModalOpen} 
+      onClose={() => setIsAddItemModalOpen(false)}
+      onAddItem={handleAddItem}
+      existingItems={items}
+      locations={locations}
+    />
+  </div>
   );
 }
 
