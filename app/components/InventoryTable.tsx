@@ -30,7 +30,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       }
       return undefined;
     };
-
+  
     if ('storageMain' in location) {
       const { storageMain, storageSub, storageFinal } = location;
       const mainName = findLocationName(locations, storageMain) || storageMain;
@@ -84,12 +84,18 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
                 </button>
               </td>
               <td className="py-2 px-4 text-center">
-                <button onClick={() => onStatusChange(item.id, 'lowStock', !item.lowStock)}>
+                <button 
+                  onClick={() => onStatusChange(item.id, 'lowStock', !item.lowStock)}
+                  className="focus:outline-none"
+                >
                   {item.lowStock ? <CheckSquare className="text-red-500" /> : <Square />}
                 </button>
               </td>
               <td className="py-2 px-4 text-center">
-                <button onClick={() => onStatusChange(item.id, 'orderPlaced', !item.orderPlaced)}>
+                <button 
+                  onClick={() => onStatusChange(item.id, 'orderPlaced', !item.orderPlaced)}
+                  className="focus:outline-none"
+                >
                   {item.orderPlaced ? <CheckSquare className="text-green-500" /> : <Square />}
                 </button>
               </td>
@@ -107,6 +113,6 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       </table>
     </div>
   );
-};
+}
 
 export default InventoryTable;

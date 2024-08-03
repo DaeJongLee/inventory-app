@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic'; // For dynamic imports
 import { useInventory } from '../hooks/useInventory';
 import { Search, PlusCircle } from 'lucide-react';
 import { Item, ItemLocation, StorageLocation } from '../types/types';
@@ -11,13 +10,26 @@ import InventoryLayoutMain from './layouts/InventoryLayoutMain';
 import InventoryTable from './InventoryTable';
 import { locations } from '../data/locations';
 
-// Dynamically import AddTestDataForm only in development
-const AddTestDataForm = process.env.NODE_ENV === 'development'
-  ? dynamic(() => import('./AddTestDataForm'), { ssr: false })
-  : null;
+// 이 부분을 파일 상단에 추가합니다.
+const convertToItemLocation = (storageLocation: StorageLocation): ItemLocation => {
+  return {
+    main: storageLocation.storageMain,
+    sub: storageLocation.storageSub || undefined,
+    final: storageLocation.storageFinal || undefined
+  };
+};
+
+const convertToStorageLocation = (location: ItemLocation): StorageLocation => {
+  return {
+    storageMain: location.main,
+    storageSub: location.sub || '',
+    storageFinal: location.final || ''
+  };
+};
 
 const InventoryLayout: React.FC = () => {
-  const { items, isLoading, updateItems } = useInventory();
+  const { items: initialItems, isLoading, updateItems } = useInventory();
+  const [items, setItems] = useState<Item[]>([]);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [displayedItems, setDisplayedItems] = useState<Item[]>([]);
@@ -32,11 +44,11 @@ const InventoryLayout: React.FC = () => {
   });
   const [showLowStockItems, setShowLowStockItems] = useState(false);
   const [showOrderPlacedItems, setShowOrderPlacedItems] = useState(false);
-  const [showTestDataForm, setShowTestDataForm] = useState(false);
 
   useEffect(() => {
-    setDisplayedItems(items);
-  }, [items]);
+    setItems(initialItems);
+    setDisplayedItems(initialItems);
+  }, [initialItems]);
 
   const handleSectionClick = (section: string) => {
     setSelectedSection(section);
@@ -91,37 +103,36 @@ const InventoryLayout: React.FC = () => {
     const updatedItems = items.map((item) =>
       item.id === itemId ? { ...item, location: newLocation, storageLocation: newStorageLocation } : item
     );
-    await updateItems(updatedItems);
+    setItems(updatedItems);
+    setDisplayedItems(updatedItems);
     setIsLocationModalOpen(false);
     setSelectedItem(null);
-  };
-
-  const convertToItemLocation = (location: StorageLocation): ItemLocation => {
-    return {
-      main: location.storageMain,
-      sub: location.storageSub || undefined,
-      final: location.storageFinal || undefined
-    };
-  };
-
-  const convertToStorageLocation = (location: ItemLocation): StorageLocation => {
-    return {
-      storageMain: location.main,
-      storageSub: location.sub || '',
-      storageFinal: location.final || ''
-    };
+    try {
+      await updateItems(updatedItems);
+    } catch (error) {
+      console.error('Error updating item location:', error);
+      alert('위치 변경 중 오류가 발생했습니다.');
+    }
   };
 
   const handleSwapLocations = async (itemId: string) => {
-    const item = items.find(item => item.id === itemId);
-    if (item) {
-      const updatedItem = {
-        ...item,
-        location: convertToItemLocation(item.storageLocation),
-        storageLocation: convertToStorageLocation(item.location)
-      };
-      const updatedItems = items.map(i => i.id === itemId ? updatedItem : i);
+    const updatedItems = items.map(item => {
+      if (item.id === itemId) {
+        return {
+          ...item,
+          location: convertToItemLocation(item.storageLocation),
+          storageLocation: convertToStorageLocation(item.location)
+        };
+      }
+      return item;
+    });
+    setItems(updatedItems);
+    setDisplayedItems(updatedItems);
+    try {
       await updateItems(updatedItems);
+    } catch (error) {
+      console.error('Error swapping locations:', error);
+      alert('위치 교환 중 오류가 발생했습니다.');
     }
   };
 
@@ -131,24 +142,40 @@ const InventoryLayout: React.FC = () => {
         ? { ...item, [status]: value, [`${status}Time`]: value ? new Date().toISOString() : null }
         : item
     );
-    await updateItems(updatedItems);
+    setItems(updatedItems);
+    setDisplayedItems(updatedItems);
+    try {
+      await updateItems(updatedItems);
+    } catch (error) {
+      console.error('Error updating item status:', error);
+      alert('상태 업데이트 중 오류가 발생했습니다.');
+    }
   };
 
   const handleDeleteItem = async (itemId: string) => {
     if (window.confirm('이 항목을 삭제하시겠습니까?')) {
       const updatedItems = items.filter((item) => item.id !== itemId);
-      await updateItems(updatedItems);
+      setItems(updatedItems);
+      setDisplayedItems(updatedItems);
+      try {
+        await updateItems(updatedItems);
+      } catch (error) {
+        console.error('Error deleting item:', error);
+        alert('항목 삭제 중 오류가 발생했습니다.');
+      }
     }
   };
 
   const handleAddItem = async (newItem: Item) => {
+    const updatedItems = [...items, newItem];
+    setItems(updatedItems);
+    setDisplayedItems(updatedItems);
+    setIsAddItemModalOpen(false);
     try {
-      const updatedItems = [...items, newItem];
       await updateItems(updatedItems);
-      setDisplayedItems(updatedItems);
-      setIsAddItemModalOpen(false);
     } catch (error) {
-      console.error("Error adding new item:", error);
+      console.error('Error adding new item:', error);
+      alert('새 항목 추가 중 오류가 발생했습니다.');
     }
   };
 
@@ -160,25 +187,9 @@ const InventoryLayout: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
-      
-      {process.env.NODE_ENV === 'development' && (
-        <>
-          <button 
-            onClick={() => setShowTestDataForm(!showTestDataForm)}
-            className="mb-4 bg-gray-500 text-white px-4 py-2 rounded"
-          >
-            {showTestDataForm ? '테스트 데이터 폼 숨기기' : '테스트 데이터 폼 보기'}
-          </button>
-
-          {showTestDataForm && AddTestDataForm && <AddTestDataForm />}
-        </>
-      )}
-
       <div className="grid grid-cols-[3.5fr,6.5fr] gap-2">
-        
-        {/* 재고 위치 */}
         <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-700"></h2>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 위치</h2>
           <div className="flex space-x-2 mb-4">
             {['preparation', 'sales', 'storage'].map((key) => (
               <button 
@@ -196,8 +207,7 @@ const InventoryLayout: React.FC = () => {
             highlightedLocation={highlightedLocation}
           />
         </div>
-    
-        {/* 검색 및 아이템 목록 */}
+
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
