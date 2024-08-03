@@ -24,6 +24,8 @@ const InventoryLayout: React.FC = () => {
     sales: true,
     storage: true,
   });
+  const [showLowStockItems, setShowLowStockItems] = useState(false);
+  const [showOrderPlacedItems, setShowOrderPlacedItems] = useState(false);
 
   useEffect(() => {
     setDisplayedItems(items);
@@ -111,6 +113,36 @@ const InventoryLayout: React.FC = () => {
     }
   };
 
+  const convertToItemLocation = (location: StorageLocation): ItemLocation => {
+    return {
+      main: location.storageMain,
+      sub: location.storageSub,
+      final: location.storageFinal
+    };
+  };
+
+  const convertToStorageLocation = (location: ItemLocation): StorageLocation => {
+    return {
+      storageMain: location.main,
+      storageSub: location.sub || '',
+      storageFinal: location.final || ''
+    };
+  };
+
+  const handleSwapLocations = (item: Item) => {
+    const updatedItem = {
+      ...item,
+      location: convertToItemLocation(item.storageLocation),
+      storageLocation: convertToStorageLocation(item.location)
+    };
+    handleUpdateLocation(updatedItem);
+  };
+
+  const filteredItems = displayedItems.filter(item => 
+    (!showLowStockItems || item.lowStock) &&
+    (!showOrderPlacedItems || item.orderPlaced)
+  );
+
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
@@ -163,11 +195,26 @@ const InventoryLayout: React.FC = () => {
             </button>
           </div>
         </form>
+        <div className="mb-4 flex space-x-2">
+          <button
+            onClick={() => setShowLowStockItems(!showLowStockItems)}
+            className={`px-3 py-1 rounded ${showLowStockItems ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+          >
+            재고 부족 항목 {showLowStockItems ? '숨기기' : '보기'}
+          </button>
+          <button
+            onClick={() => setShowOrderPlacedItems(!showOrderPlacedItems)}
+            className={`px-3 py-1 rounded ${showOrderPlacedItems ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+          >
+            주문 완료 항목 {showOrderPlacedItems ? '숨기기' : '보기'}
+          </button>
+        </div>
         <InventoryTable 
-          items={displayedItems}
+          items={filteredItems}
           onStatusChange={updateItemStatus}
           onUpdateLocation={handleUpdateLocation}
           onDeleteItem={handleDeleteItem}
+          onSwapLocations={handleSwapLocations}
           locations={locations}
         />
       </div>
