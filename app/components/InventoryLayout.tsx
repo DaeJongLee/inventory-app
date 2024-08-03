@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useInventory } from '../hooks/useInventory';
 import { Search, PlusCircle } from 'lucide-react';
 import { Item, ItemLocation, StorageLocation } from '../types/types';
@@ -10,7 +10,6 @@ import InventoryLayoutMain from './layouts/InventoryLayoutMain';
 import InventoryTable from './InventoryTable';
 import { locations } from '../data/locations';
 
-// 이 부분을 파일 상단에 추가합니다.
 const convertToItemLocation = (storageLocation: StorageLocation): ItemLocation => {
   return {
     main: storageLocation.storageMain,
@@ -136,21 +135,25 @@ const InventoryLayout: React.FC = () => {
     }
   };
 
-  const updateItemStatus = async (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => {
-    const updatedItems = items.map((item) =>
-      item.id === itemId
-        ? { ...item, [status]: value, [`${status}Time`]: value ? new Date().toISOString() : null }
-        : item
-    );
-    setItems(updatedItems);
-    setDisplayedItems(updatedItems);
+  const updateItemStatus = useCallback(async (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => {
+    const itemToUpdate = items.find(item => item.id === itemId);
+    if (!itemToUpdate) return;
+
+    const updatedItem = {
+      ...itemToUpdate,
+      [status]: value,
+      [`${status}Time`]: value ? new Date().toISOString() : null
+    };
+
     try {
-      await updateItems(updatedItems);
+      await updateItems([updatedItem]);
+      setItems(prevItems => prevItems.map(item => item.id === itemId ? updatedItem : item));
+      setDisplayedItems(prevItems => prevItems.map(item => item.id === itemId ? updatedItem : item));
     } catch (error) {
       console.error('Error updating item status:', error);
-      alert('상태 업데이트 중 오류가 발생했습니다.');
+      alert('상태 업데이트 중 오류가 발생했습니다. 다시 시도해 주세요.');
     }
-  };
+  }, [items, updateItems]);
 
   const handleDeleteItem = async (itemId: string) => {
     if (window.confirm('이 항목을 삭제하시겠습니까?')) {

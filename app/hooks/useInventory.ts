@@ -21,14 +21,13 @@ export function useInventory() {
   }, []);
 
   const updateItems = async (updatedItems: Item[]) => {
+    const batch = writeBatch(db);
+    updatedItems.forEach((item) => {
+      const itemRef = doc(db, 'items', item.id);
+      batch.set(itemRef, item, { merge: true });
+    });
+
     try {
-      const batch = writeBatch(db);
-      updatedItems.forEach((item) => {
-        const itemRef = item.id 
-          ? doc(db, 'items', item.id) 
-          : doc(collection(db, 'items'));
-        batch.set(itemRef, { ...item, id: itemRef.id });
-      });
       await batch.commit();
     } catch (error) {
       console.error('Error updating items:', error);
