@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic'; // For dynamic imports
 import { useInventory } from '../hooks/useInventory';
 import { Search, PlusCircle } from 'lucide-react';
 import { Item, ItemLocation, StorageLocation } from '../types/types';
@@ -9,6 +10,11 @@ import AddItemModal from './AddItemModal';
 import InventoryLayoutMain from './layouts/InventoryLayoutMain';
 import InventoryTable from './InventoryTable';
 import { locations } from '../data/locations';
+
+// Dynamically import AddTestDataForm only in development
+const AddTestDataForm = process.env.NODE_ENV === 'development'
+  ? dynamic(() => import('./AddTestDataForm'), { ssr: false })
+  : null;
 
 const InventoryLayout: React.FC = () => {
   const { items, isLoading, updateItems } = useInventory();
@@ -26,6 +32,7 @@ const InventoryLayout: React.FC = () => {
   });
   const [showLowStockItems, setShowLowStockItems] = useState(false);
   const [showOrderPlacedItems, setShowOrderPlacedItems] = useState(false);
+  const [showTestDataForm, setShowTestDataForm] = useState(false);
 
   useEffect(() => {
     setDisplayedItems(items);
@@ -153,97 +160,111 @@ const InventoryLayout: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
-      <div className="grid grid-cols-[3.5fr,6.5fr] gap-2">
       
-      {/* 재고 위치 */}
-      <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-700"></h2>
-        <div className="flex space-x-2 mb-4">
-          {['preparation', 'sales', 'storage'].map((key) => (
-            <button 
-              key={key}
-              onClick={() => setVisibleSections(prev => ({ ...prev, [key]: !prev[key] }))} 
-              className={`px-3 py-1 rounded ${visibleSections[key] ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
-            >
-              {visibleSections[key] ? `${key} 숨기기` : `${key} 보기`}
-            </button>
-          ))}
-        </div>
-        <InventoryLayoutMain 
-          visibleSections={visibleSections}
-          handleSectionClick={handleSectionClick}
-          highlightedLocation={highlightedLocation}
-        />
-      </div>
-  
-      {/* 검색 및 아이템 목록 */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
+      {process.env.NODE_ENV === 'development' && (
+        <>
           <button 
-            onClick={() => setIsAddItemModalOpen(true)} 
-            className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
+            onClick={() => setShowTestDataForm(!showTestDataForm)}
+            className="mb-4 bg-gray-500 text-white px-4 py-2 rounded"
           >
-            <PlusCircle size={20} className="mr-2" />
-            아이템 추가
+            {showTestDataForm ? '테스트 데이터 폼 숨기기' : '테스트 데이터 폼 보기'}
           </button>
+
+          {showTestDataForm && AddTestDataForm && <AddTestDataForm />}
+        </>
+      )}
+
+      <div className="grid grid-cols-[3.5fr,6.5fr] gap-2">
+        
+        {/* 재고 위치 */}
+        <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700"></h2>
+          <div className="flex space-x-2 mb-4">
+            {['preparation', 'sales', 'storage'].map((key) => (
+              <button 
+                key={key}
+                onClick={() => setVisibleSections(prev => ({ ...prev, [key]: !prev[key] }))} 
+                className={`px-3 py-1 rounded ${visibleSections[key] ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+              >
+                {visibleSections[key] ? `${key} 숨기기` : `${key} 보기`}
+              </button>
+            ))}
+          </div>
+          <InventoryLayoutMain 
+            visibleSections={visibleSections}
+            handleSectionClick={handleSectionClick}
+            highlightedLocation={highlightedLocation}
+          />
         </div>
-        <form onSubmit={handleSearch} className="mb-6">
-          <div className="flex">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="아이템 검색..."
-              className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
-              {isLoading ? '로딩 중...' : <Search size={20} />}
+    
+        {/* 검색 및 아이템 목록 */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
+            <button 
+              onClick={() => setIsAddItemModalOpen(true)} 
+              className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
+            >
+              <PlusCircle size={20} className="mr-2" />
+              아이템 추가
             </button>
           </div>
-        </form>
-        <div className="mb-4 flex space-x-2">
-          <button
-            onClick={() => setShowLowStockItems(!showLowStockItems)}
-            className={`px-3 py-1 rounded ${showLowStockItems ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
-          >
-            재고 부족 항목 {showLowStockItems ? '숨기기' : '보기'}
-          </button>
-          <button
-            onClick={() => setShowOrderPlacedItems(!showOrderPlacedItems)}
-            className={`px-3 py-1 rounded ${showOrderPlacedItems ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
-          >
-            주문 완료 항목 {showOrderPlacedItems ? '숨기기' : '보기'}
-          </button>
+          <form onSubmit={handleSearch} className="mb-6">
+            <div className="flex">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="아이템 검색..."
+                className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
+                {isLoading ? '로딩 중...' : <Search size={20} />}
+              </button>
+            </div>
+          </form>
+          <div className="mb-4 flex space-x-2">
+            <button
+              onClick={() => setShowLowStockItems(!showLowStockItems)}
+              className={`px-3 py-1 rounded ${showLowStockItems ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+            >
+              재고 부족 항목 {showLowStockItems ? '숨기기' : '보기'}
+            </button>
+            <button
+              onClick={() => setShowOrderPlacedItems(!showOrderPlacedItems)}
+              className={`px-3 py-1 rounded ${showOrderPlacedItems ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+            >
+              주문 완료 항목 {showOrderPlacedItems ? '숨기기' : '보기'}
+            </button>
+          </div>
+          <InventoryTable 
+            items={filteredItems}
+            onStatusChange={updateItemStatus}
+            onUpdateLocation={handleUpdateLocation}
+            onDeleteItem={handleDeleteItem}
+            onSwapLocations={handleSwapLocations}
+            locations={locations}
+          />
         </div>
-        <InventoryTable 
-          items={filteredItems}
-          onStatusChange={updateItemStatus}
-          onUpdateLocation={handleUpdateLocation}
-          onDeleteItem={handleDeleteItem}
-          onSwapLocations={handleSwapLocations}
+      </div>
+      
+      {selectedItem && (
+        <LocationChangeModal 
+          isOpen={isLocationModalOpen} 
+          item={selectedItem} 
+          onClose={() => setIsLocationModalOpen(false)}
+          onSave={handleLocationChange}
           locations={locations}
         />
-      </div>
-    </div>
-    
-    {selectedItem && (
-      <LocationChangeModal 
-        isOpen={isLocationModalOpen} 
-        item={selectedItem} 
-        onClose={() => setIsLocationModalOpen(false)}
-        onSave={handleLocationChange}
+      )}
+      <AddItemModal 
+        isOpen={isAddItemModalOpen} 
+        onClose={() => setIsAddItemModalOpen(false)}
+        onAddItem={handleAddItem}
+        existingItems={items}
         locations={locations}
       />
-    )}
-    <AddItemModal 
-      isOpen={isAddItemModalOpen} 
-      onClose={() => setIsAddItemModalOpen(false)}
-      onAddItem={handleAddItem}
-      existingItems={items}
-      locations={locations}
-    />
-  </div>
+    </div>
   );
 }
 

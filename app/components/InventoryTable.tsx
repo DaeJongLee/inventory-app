@@ -4,7 +4,7 @@ import { Edit, Trash2, CheckSquare, Square, Repeat } from 'lucide-react';
 
 interface InventoryTableProps {
   items: Item[];
-  onUpdateLocation: (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => void;
+  onUpdateLocation: (itemId: string) => void;
   onDeleteItem: (itemId: string) => void;
   onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
   onSwapLocations: (itemId: string) => void;
@@ -30,7 +30,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       }
       return undefined;
     };
-  
+
     if ('storageMain' in location) {
       const { storageMain, storageSub, storageFinal } = location;
       const mainName = findLocationName(locations, storageMain) || storageMain;
@@ -69,7 +69,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
               <td className="py-2 px-4">{getLocationName(item.storageLocation)}</td>
               <td className="py-2 px-4 text-center">
                 <button 
-                  onClick={() => onUpdateLocation(item.id, item.location, item.storageLocation)} 
+                  onClick={() => onUpdateLocation(item.id)} 
                   className="text-blue-500 hover:text-blue-700"
                 >
                   <Edit size={18} />
@@ -107,5 +107,6 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       </table>
     </div>
   );
-}
+};
+
 export default InventoryTable;

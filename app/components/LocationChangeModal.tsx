@@ -132,13 +132,13 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({
               {newStorageLocation.storageMain && (
                 <div>
                   <p className="text-sm text-gray-600 mb-1">서브 보관 위치:</p>
-                  {renderLocationButtons('storageSub', getSubLocations(newStorageLocation.storageMain), newStorageLocation.storageSub, (value) => handleStorageLocationSelect('storageSub', value))}
+                  {renderLocationButtons('storageSub', getSubLocations(newStorageLocation.storageMain), newStorageLocation.storageSub || '', (value) => handleStorageLocationSelect('storageSub', value))}
                 </div>
               )}
               {newStorageLocation.storageSub && (
                 <div>
                   <p className="text-sm text-gray-600 mb-1">파이널 보관 위치:</p>
-                  {renderLocationButtons('storageFinal', getFinalLocations(newStorageLocation.storageMain, newStorageLocation.storageSub), newStorageLocation.storageFinal, (value) => handleStorageLocationSelect('storageFinal', value))}
+                  {renderLocationButtons('storageFinal', getFinalLocations(newStorageLocation.storageMain, newStorageLocation.storageSub), newStorageLocation.storageFinal || '', (value) => handleStorageLocationSelect('storageFinal', value))}
                 </div>
               )}
             </div>
@@ -157,6 +157,5 @@ const LocationChangeModal: React.FC<LocationChangeModalProps> = ({
     </div>
   );
 }
-
 
 export default LocationChangeModal;
