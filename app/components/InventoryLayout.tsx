@@ -211,17 +211,13 @@ const InventoryLayout: React.FC = () => {
       </div>
   
       {showInventoryLayout && (
-        <div className={`fixed inset-0 bg-black bg-opacity-50 z-40 ${showInventoryLayout ? '' : 'hidden'}`} onClick={() => setShowInventoryLayout(false)}></div>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowInventoryLayout(false)}></div>
       )}
   
-      <div className={`fixed bg-white shadow-lg transition-all duration-300 ease-in-out z-50 ${
-        showInventoryLayout ? 'opacity-100 visible' : 'opacity-0 invisible'
-      } ${
-        isMobileOrTablet 
-          ? 'top-1/3 left-1/3 w-1/3 h-1/3' 
-          : 'top-1/3 left-0 w-1/3 h-1/3'
+      <div className={`fixed top-0 left-0 h-full w-1/3 bg-white shadow-lg transition-all duration-300 ease-in-out z-50 overflow-y-auto ${
+        showInventoryLayout ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        <div className="p-6 h-full overflow-y-auto">
+        <div className="p-6">
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 위치</h2>
           <InventoryLayoutMain 
             visibleSections={{
@@ -274,14 +270,16 @@ const InventoryLayout: React.FC = () => {
             주문 완료 항목 {showOrderPlacedItems ? '숨기기' : '보기'}
           </button>
         </div>
-        <InventoryTable 
-          items={filteredItems}
-          onStatusChange={updateItemStatus}
-          onUpdateLocation={handleUpdateLocation}
-          onDeleteItem={handleDeleteItem}
-          onSwapLocations={handleSwapLocations}
-          locations={locations}
-        />
+        <div className="overflow-x-auto">
+          <InventoryTable 
+            items={filteredItems}
+            onStatusChange={updateItemStatus}
+            onUpdateLocation={handleUpdateLocation}
+            onDeleteItem={handleDeleteItem}
+            onSwapLocations={handleSwapLocations}
+            locations={locations}
+          />
+        </div>
       </div>
       
       {selectedItem && (
