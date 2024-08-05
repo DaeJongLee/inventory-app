@@ -11,7 +11,6 @@ interface InventoryTableProps {
   locations: Location[];
 }
 
-// eslint-disable-next-line react/display-name
 const InventoryTable: React.FC<InventoryTableProps> = React.memo(({ 
   items, 
   onUpdateLocation,
@@ -47,10 +46,10 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
     }
   };
 
-  const formatTime = (time: string | null) => {
-    if (!time) return '';
-    const date = new Date(time);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  const formatDate = (date: string | null) => {
+    if (!date) return '';
+    const d = new Date(date);
+    return `${String(d.getFullYear()).slice(-2)}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}-${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
   };
 
   return (
@@ -97,6 +96,9 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
                 >
                   {item.lowStock ? <CheckSquare className="text-red-500" size={16} /> : <Square size={16} />}
                 </button>
+                {item.lowStockTime && (
+                  <div className="text-xs text-gray-500">{formatDate(item.lowStockTime)}</div>
+                )}
               </td>
               <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
                 <button 
@@ -105,6 +107,9 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
                 >
                   {item.orderPlaced ? <CheckSquare className="text-green-500" size={16} /> : <Square size={16} />}
                 </button>
+                {item.orderPlacedTime && (
+                  <div className="text-xs text-gray-500">{formatDate(item.orderPlacedTime)}</div>
+                )}
               </td>
               <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
                 <button 
