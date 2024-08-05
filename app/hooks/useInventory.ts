@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { collection, onSnapshot, doc, setDoc, deleteDoc, writeBatch } from 'firebase/firestore';
+import { useState, useEffect, useCallback } from 'react';
+import { collection, onSnapshot, doc, writeBatch, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Item } from '../types/types';
 
@@ -20,7 +20,7 @@ export function useInventory() {
     return () => unsubscribe();
   }, []);
 
-  const updateItems = async (updatedItems: Item[]) => {
+  const updateItems = useCallback(async (updatedItems: Item[]) => {
     const batch = writeBatch(db);
     updatedItems.forEach((item) => {
       const itemRef = doc(db, 'items', item.id);
@@ -33,16 +33,16 @@ export function useInventory() {
       console.error('Error updating items:', error);
       throw error;
     }
-  };
+  }, []);
 
-  const deleteItem = async (itemId: string) => {
+  const deleteItem = useCallback(async (itemId: string) => {
     try {
       await deleteDoc(doc(db, 'items', itemId));
     } catch (error) {
       console.error('Error deleting item:', error);
       throw error;
     }
-  };
+  }, []);
 
   return { items, isLoading, updateItems, deleteItem };
 }

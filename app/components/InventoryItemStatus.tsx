@@ -10,7 +10,8 @@ interface InventoryItemStatusProps {
   onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
 }
 
-const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({ 
+// eslint-disable-next-line react/display-name
+const InventoryItemStatus: React.FC<InventoryItemStatusProps> = React.memo(({ 
   itemId,
   lowStock, 
   orderPlaced,
@@ -24,11 +25,15 @@ const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({
     return `${date.getFullYear().toString().substr(-2)}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   };
 
+  const handleStatusChange = (status: 'lowStock' | 'orderPlaced') => {
+    onStatusChange(itemId, status, status === 'lowStock' ? !lowStock : !orderPlaced);
+  };
+
   return (
     <div className="flex flex-col space-y-2">
       <div className="flex items-center space-x-2">
         <button 
-          onClick={() => onStatusChange(itemId, 'lowStock', !lowStock)} 
+          onClick={() => handleStatusChange('lowStock')} 
           className={`flex items-center px-2 py-1 rounded ${lowStock ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'} hover:bg-opacity-80 transition duration-200`}
         >
           {lowStock ? <CheckSquare className="mr-1" size={16} /> : <Square className="mr-1" size={16} />}
@@ -38,7 +43,7 @@ const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({
       </div>
       <div className="flex items-center space-x-2">
         <button 
-          onClick={() => onStatusChange(itemId, 'orderPlaced', !orderPlaced)} 
+          onClick={() => handleStatusChange('orderPlaced')} 
           className={`flex items-center px-2 py-1 rounded ${orderPlaced ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'} hover:bg-opacity-80 transition duration-200`}
         >
           {orderPlaced ? <CheckSquare className="mr-1" size={16} /> : <Square className="mr-1" size={16} />}
@@ -48,6 +53,6 @@ const InventoryItemStatus: React.FC<InventoryItemStatusProps> = ({
       </div>
     </div>
   );
-};
+});
 
 export default InventoryItemStatus;

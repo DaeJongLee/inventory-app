@@ -36,11 +36,7 @@ const InventoryLayout: React.FC = () => {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({
-    preparation: true,
-    sales: true,
-    storage: true,
-  });
+  const [showInventoryLayout, setShowInventoryLayout] = useState(false);
   const [showLowStockItems, setShowLowStockItems] = useState(false);
   const [showOrderPlacedItems, setShowOrderPlacedItems] = useState(false);
 
@@ -49,7 +45,7 @@ const InventoryLayout: React.FC = () => {
     setDisplayedItems(initialItems);
   }, [initialItems]);
 
-  const handleSectionClick = (section: string) => {
+  const handleSectionClick = useCallback((section: string) => {
     setSelectedSection(section);
     const sectionItems = items.filter((item) => {
       const location = item.location;
@@ -65,9 +61,9 @@ const InventoryLayout: React.FC = () => {
     });
     setDisplayedItems(sectionItems);
     setHighlightedLocation(section);
-  };
+  }, [items]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     const searchTerms = searchTerm.toLowerCase().split(' ');
     const results = items.filter((item) => {
@@ -88,17 +84,17 @@ const InventoryLayout: React.FC = () => {
         results[0].storageLocation.storageFinal || results[0].storageLocation.storageSub || results[0].storageLocation.storageMain
       );
     }
-  };
+  }, [items, searchTerm]);
 
-  const handleUpdateLocation = (itemId: string) => {
+  const handleUpdateLocation = useCallback((itemId: string) => {
     const item = items.find(item => item.id === itemId);
     if (item) {
       setSelectedItem(item);
       setIsLocationModalOpen(true);
     }
-  };
+  }, [items]);
 
-  const handleLocationChange = async (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => {
+  const handleLocationChange = useCallback(async (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => {
     const updatedItems = items.map((item) =>
       item.id === itemId ? { ...item, location: newLocation, storageLocation: newStorageLocation } : item
     );
@@ -112,9 +108,9 @@ const InventoryLayout: React.FC = () => {
       console.error('Error updating item location:', error);
       alert('위치 변경 중 오류가 발생했습니다.');
     }
-  };
+  }, [items, updateItems]);
 
-  const handleSwapLocations = async (itemId: string) => {
+  const handleSwapLocations = useCallback(async (itemId: string) => {
     const updatedItems = items.map(item => {
       if (item.id === itemId) {
         return {
@@ -133,29 +129,30 @@ const InventoryLayout: React.FC = () => {
       console.error('Error swapping locations:', error);
       alert('위치 교환 중 오류가 발생했습니다.');
     }
-  };
+  }, [items, updateItems]);
 
   const updateItemStatus = useCallback(async (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => {
-    const itemToUpdate = items.find(item => item.id === itemId);
-    if (!itemToUpdate) return;
-
-    const updatedItem = {
-      ...itemToUpdate,
-      [status]: value,
-      [`${status}Time`]: value ? new Date().toISOString() : null
-    };
-
+    const updatedItems = items.map(item => {
+      if (item.id === itemId) {
+        return {
+          ...item,
+          [status]: value,
+          [`${status}Time`]: value ? new Date().toISOString() : null
+        };
+      }
+      return item;
+    });
+    setItems(updatedItems);
+    setDisplayedItems(updatedItems);
     try {
-      await updateItems([updatedItem]);
-      setItems(prevItems => prevItems.map(item => item.id === itemId ? updatedItem : item));
-      setDisplayedItems(prevItems => prevItems.map(item => item.id === itemId ? updatedItem : item));
+      await updateItems(updatedItems);
     } catch (error) {
       console.error('Error updating item status:', error);
-      alert('상태 업데이트 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      alert('상태 업데이트 중 오류가 발생했습니다.');
     }
   }, [items, updateItems]);
 
-  const handleDeleteItem = async (itemId: string) => {
+  const handleDeleteItem = useCallback(async (itemId: string) => {
     if (window.confirm('이 항목을 삭제하시겠습니까?')) {
       const updatedItems = items.filter((item) => item.id !== itemId);
       setItems(updatedItems);
@@ -167,9 +164,9 @@ const InventoryLayout: React.FC = () => {
         alert('항목 삭제 중 오류가 발생했습니다.');
       }
     }
-  };
+  }, [items, updateItems]);
 
-  const handleAddItem = async (newItem: Item) => {
+  const handleAddItem = useCallback(async (newItem: Item) => {
     const updatedItems = [...items, newItem];
     setItems(updatedItems);
     setDisplayedItems(updatedItems);
@@ -180,7 +177,7 @@ const InventoryLayout: React.FC = () => {
       console.error('Error adding new item:', error);
       alert('새 항목 추가 중 오류가 발생했습니다.');
     }
-  };
+  }, [items, updateItems]);
 
   const filteredItems = displayedItems.filter(item => 
     (!showLowStockItems || item.lowStock) &&
@@ -190,75 +187,76 @@ const InventoryLayout: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
-      <div className="grid grid-cols-[3.5fr,6.5fr] gap-2">
+      <div className="mb-4">
+        <button
+          onClick={() => setShowInventoryLayout(!showInventoryLayout)}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+        >
+          {showInventoryLayout ? '재고 위치 숨기기' : '재고 위치 보기'}
+        </button>
+      </div>
+      {showInventoryLayout && (
         <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 위치</h2>
-          <div className="flex space-x-2 mb-4">
-            {['preparation', 'sales', 'storage'].map((key) => (
-              <button 
-                key={key}
-                onClick={() => setVisibleSections(prev => ({ ...prev, [key]: !prev[key] }))} 
-                className={`px-3 py-1 rounded ${visibleSections[key] ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
-              >
-                {visibleSections[key] ? `${key} 숨기기` : `${key} 보기`}
-              </button>
-            ))}
-          </div>
-          <InventoryLayoutMain 
-            visibleSections={visibleSections}
-            handleSectionClick={handleSectionClick}
-            highlightedLocation={highlightedLocation}
-          />
+          
+<InventoryLayoutMain 
+  visibleSections={{
+    preparation: true,
+    sales: true,
+    storage: true
+  }}
+  handleSectionClick={handleSectionClick}
+  highlightedLocation={highlightedLocation}
+/>
         </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
-            <button 
-              onClick={() => setIsAddItemModalOpen(true)} 
-              className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
-            >
-              <PlusCircle size={20} className="mr-2" />
-              아이템 추가
-            </button>
-          </div>
-          <form onSubmit={handleSearch} className="mb-6">
-            <div className="flex">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="아이템 검색..."
-                className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
-                {isLoading ? '로딩 중...' : <Search size={20} />}
-              </button>
-            </div>
-          </form>
-          <div className="mb-4 flex space-x-2">
-            <button
-              onClick={() => setShowLowStockItems(!showLowStockItems)}
-              className={`px-3 py-1 rounded ${showLowStockItems ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
-            >
-              재고 부족 항목 {showLowStockItems ? '숨기기' : '보기'}
-            </button>
-            <button
-              onClick={() => setShowOrderPlacedItems(!showOrderPlacedItems)}
-              className={`px-3 py-1 rounded ${showOrderPlacedItems ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
-            >
-              주문 완료 항목 {showOrderPlacedItems ? '숨기기' : '보기'}
-            </button>
-          </div>
-          <InventoryTable 
-            items={filteredItems}
-            onStatusChange={updateItemStatus}
-            onUpdateLocation={handleUpdateLocation}
-            onDeleteItem={handleDeleteItem}
-            onSwapLocations={handleSwapLocations}
-            locations={locations}
-          />
+      )}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
+          <button 
+            onClick={() => setIsAddItemModalOpen(true)} 
+            className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600 transition duration-200"
+          >
+            <PlusCircle size={20} className="mr-2" />
+            아이템 추가
+          </button>
         </div>
+        <form onSubmit={handleSearch} className="mb-6">
+          <div className="flex">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="아이템 검색..."
+              className="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 transition duration-200" disabled={isLoading}>
+              {isLoading ? '로딩 중...' : <Search size={20} />}
+            </button>
+          </div>
+        </form>
+        <div className="mb-4 flex space-x-2">
+          <button
+            onClick={() => setShowLowStockItems(!showLowStockItems)}
+            className={`px-3 py-1 rounded ${showLowStockItems ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+          >
+            재고 부족 항목 {showLowStockItems ? '숨기기' : '보기'}
+          </button>
+          <button
+            onClick={() => setShowOrderPlacedItems(!showOrderPlacedItems)}
+            className={`px-3 py-1 rounded ${showOrderPlacedItems ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-200`}
+          >
+            주문 완료 항목 {showOrderPlacedItems ? '숨기기' : '보기'}
+          </button>
+        </div>
+        <InventoryTable 
+          items={filteredItems}
+          onStatusChange={updateItemStatus}
+          onUpdateLocation={handleUpdateLocation}
+          onDeleteItem={handleDeleteItem}
+          onSwapLocations={handleSwapLocations}
+          locations={locations}
+        />
       </div>
       
       {selectedItem && (

@@ -11,7 +11,8 @@ interface InventoryTableProps {
   locations: Location[];
 }
 
-const InventoryTable: React.FC<InventoryTableProps> = ({ 
+// eslint-disable-next-line react/display-name
+const InventoryTable: React.FC<InventoryTableProps> = React.memo(({ 
   items, 
   onUpdateLocation,
   onDeleteItem,
@@ -44,6 +45,12 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       const finalName = final ? findLocationName(locations, final) || final : '';
       return `${mainName}${subName ? ` / ${subName}` : ''}${finalName ? ` / ${finalName}` : ''}`;
     }
+  };
+
+  const formatTime = (time: string | null) => {
+    if (!time) return '';
+    const date = new Date(time);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
   };
 
   return (
@@ -90,6 +97,9 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
                 >
                   {item.lowStock ? <CheckSquare className="text-red-500" /> : <Square />}
                 </button>
+                {item.lowStockTime && (
+                  <span className="text-xs text-gray-500 ml-2">{formatTime(item.lowStockTime)}</span>
+                )}
               </td>
               <td className="py-2 px-4 text-center">
                 <button 
@@ -98,6 +108,9 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
                 >
                   {item.orderPlaced ? <CheckSquare className="text-green-500" /> : <Square />}
                 </button>
+                {item.orderPlacedTime && (
+                  <span className="text-xs text-gray-500 ml-2">{formatTime(item.orderPlacedTime)}</span>
+                )}
               </td>
               <td className="py-2 px-4 text-center">
                 <button 
@@ -113,6 +126,6 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
       </table>
     </div>
   );
-}
+});
 
 export default InventoryTable;

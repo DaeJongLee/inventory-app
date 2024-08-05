@@ -4,7 +4,11 @@ import SalesLayout from './SalesLayout';
 import StorageLayout from './StorageLayout';
 
 interface InventoryLayoutMainProps {
-  visibleSections: Record<string, boolean>;  // 타입을 Record<string, boolean>으로 변경
+  visibleSections: {
+    preparation: boolean;
+    sales: boolean;
+    storage: boolean;
+  };
   handleSectionClick: (section: string) => void;
   highlightedLocation: string | null;
 }

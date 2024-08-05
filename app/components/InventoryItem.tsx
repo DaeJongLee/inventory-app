@@ -5,10 +5,11 @@ import InventoryItemStatus from './InventoryItemStatus';
 interface InventoryItemProps {
   item: Item;
   onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
-  onUpdateLocation: (item: Item) => void;
+  onUpdateLocation: (itemId: string) => void;
 }
 
-const InventoryItem: React.FC<InventoryItemProps> = ({ item, onStatusChange, onUpdateLocation }) => {
+// eslint-disable-next-line react/display-name
+const InventoryItem: React.FC<InventoryItemProps> = React.memo(({ item, onStatusChange, onUpdateLocation }) => {
   const getLocationString = (location: ItemLocation | StorageLocation) => {
     if ('main' in location) {
       // This is an ItemLocation
@@ -33,13 +34,13 @@ const InventoryItem: React.FC<InventoryItemProps> = ({ item, onStatusChange, onU
         onStatusChange={onStatusChange}
       />
       <button 
-        onClick={() => onUpdateLocation(item)}
-        className="mt-2 bg-blue-500 text-white px-2 py-1 rounded"
+        onClick={() => onUpdateLocation(item.id)}
+        className="mt-2 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition duration-200"
       >
         위치 변경
       </button>
     </div>
   );
-};
+});
 
 export default InventoryItem;
