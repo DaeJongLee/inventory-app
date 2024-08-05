@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { collection, onSnapshot, doc, writeBatch, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, writeBatch, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Item } from '../types/types';
+import { Item, ItemLocation, StorageLocation } from '../types/types';
 
 export function useInventory() {
   const [items, setItems] = useState<Item[]>([]);
@@ -44,5 +44,15 @@ export function useInventory() {
     }
   }, []);
 
-  return { items, isLoading, updateItems, deleteItem };
+  const swapLocations = useCallback(async (itemId: string, newLocation: ItemLocation, newStorageLocation: StorageLocation) => {
+    const itemRef = doc(db, 'items', itemId);
+    try {
+      await updateDoc(itemRef, { location: newLocation, storageLocation: newStorageLocation });
+    } catch (error) {
+      console.error('Error swapping locations:', error);
+      throw error;
+    }
+  }, []);
+
+  return { items, isLoading, updateItems, deleteItem, swapLocations };
 }

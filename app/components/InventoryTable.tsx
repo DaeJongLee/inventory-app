@@ -1,8 +1,6 @@
-// InventoryTable.tsx
-
 import React, { useState } from 'react';
 import { Item, ItemLocation, StorageLocation, Location } from '../types/types';
-import { Edit, Trash2, CheckSquare, Square, Repeat, MessageSquare } from 'lucide-react';
+import { Edit, Trash2, CheckSquare, Square, Repeat, MessageSquare, RefreshCw } from 'lucide-react';
 
 interface InventoryTableProps {
   items: Item[];
@@ -12,6 +10,7 @@ interface InventoryTableProps {
   onSwapLocations: (itemId: string) => void;
   onUpdateMemo: (itemId: string, memo: string) => void;
   locations: Location[];
+  onRefresh: () => void;
 }
 
 const InventoryTable: React.FC<InventoryTableProps> = React.memo(({ 
@@ -21,7 +20,8 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
   onStatusChange,
   onSwapLocations,
   onUpdateMemo,
-  locations
+  locations,
+  onRefresh
 }) => {
   const [editingMemo, setEditingMemo] = useState<string | null>(null);
   const [memoText, setMemoText] = useState("");
@@ -70,103 +70,114 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
   };
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full bg-white table-auto">
-        <thead className="bg-gray-100">
-          <tr className="text-xs sm:text-sm md:text-base">
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-left">이름</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-left">판매 위치</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-left">보관 위치</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">위치 변경</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">위치 교환</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">재고 부족</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">주문 완료</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">삭제</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">메모</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id} className="border-b text-xs sm:text-sm md:text-base">
-              <td className="py-2 px-1 sm:px-2 md:px-4">{item.name}</td>
-              <td className="py-2 px-1 sm:px-2 md:px-4">{getLocationName(item.location)}</td>
-              <td className="py-2 px-1 sm:px-2 md:px-4">{getLocationName(item.storageLocation)}</td>
-              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
-                <button 
-                  onClick={() => onUpdateLocation(item.id)} 
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  <Edit size={16} />
-                </button>
-              </td>
-              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
-                <button 
-                  onClick={() => onSwapLocations(item.id)} 
-                  className="text-green-500 hover:text-green-700"
-                >
-                  <Repeat size={16} />
-                </button>
-              </td>
-              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
-                <button 
-                  onClick={() => onStatusChange(item.id, 'lowStock', !item.lowStock)}
-                  className="focus:outline-none"
-                >
-                  {item.lowStock ? <CheckSquare className="text-red-500" size={16} /> : <Square size={16} />}
-                </button>
-                {item.lowStockTime && (
-                  <div className="text-xs text-gray-500">{formatDate(item.lowStockTime)}</div>
-                )}
-              </td>
-              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
-                <button 
-                  onClick={() => onStatusChange(item.id, 'orderPlaced', !item.orderPlaced)}
-                  className="focus:outline-none"
-                >
-                  {item.orderPlaced ? <CheckSquare className="text-green-500" size={16} /> : <Square size={16} />}
-                </button>
-                {item.orderPlacedTime && (
-                  <div className="text-xs text-gray-500">{formatDate(item.orderPlacedTime)}</div>
-                )}
-              </td>
-              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
-                <button 
-                  onClick={() => onDeleteItem(item.id)} 
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </td>
-              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
-                {editingMemo === item.id ? (
-                  <div>
-                    <input 
-                      type="text" 
-                      value={memoText} 
-                      onChange={(e) => setMemoText(e.target.value)}
-                      className="border rounded px-2 py-1 w-full"
-                    />
+    <div>
+      <div className="mb-4">
+        <button 
+          onClick={onRefresh}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center"
+        >
+          <RefreshCw size={20} className="mr-2" />
+          새로고침
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full bg-white table-auto">
+          <thead className="bg-gray-100">
+            <tr className="text-xs sm:text-sm md:text-base">
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">메모</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-left">이름</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-left">판매 위치</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-left">보관 위치</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">위치 변경</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">위치 교환</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">재고 부족</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">주문 완료</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.id} className="border-b text-xs sm:text-sm md:text-base">
+                <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
+                  {editingMemo === item.id ? (
+                    <div>
+                      <textarea 
+                        value={memoText} 
+                        onChange={(e) => setMemoText(e.target.value)}
+                        className="border rounded px-2 py-1 w-full"
+                        rows={3}
+                      />
+                      <button 
+                        onClick={() => handleMemoSave(item.id)}
+                        className="bg-blue-500 text-white px-2 py-1 rounded mt-1 hover:bg-blue-600 transition duration-200"
+                      >
+                        저장
+                      </button>
+                    </div>
+                  ) : (
                     <button 
-                      onClick={() => handleMemoSave(item.id)}
-                      className="bg-blue-500 text-white px-2 py-1 rounded mt-1"
+                      onClick={() => handleMemoClick(item.id, item.memo)}
+                      className="text-blue-500 hover:text-blue-700"
                     >
-                      저장
+                      <MessageSquare size={16} />
+                      {item.memo && <span className="ml-1">{item.memo.substring(0, 10)}...</span>}
                     </button>
-                  </div>
-                ) : (
+                  )}
+                </td>
+                <td className="py-2 px-1 sm:px-2 md:px-4">{item.name}</td>
+                <td className="py-2 px-1 sm:px-2 md:px-4">{getLocationName(item.location)}</td>
+                <td className="py-2 px-1 sm:px-2 md:px-4">{getLocationName(item.storageLocation)}</td>
+                <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
                   <button 
-                    onClick={() => handleMemoClick(item.id, item.memo)}
+                    onClick={() => onUpdateLocation(item.id)} 
                     className="text-blue-500 hover:text-blue-700"
                   >
-                    <MessageSquare size={16} />
-                    {item.memo && <span className="ml-1">{item.memo.substring(0, 10)}...</span>}
+                    <Edit size={16} />
                   </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                </td>
+                <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
+                  <button 
+                    onClick={() => onSwapLocations(item.id)} 
+                    className="text-green-500 hover:text-green-700"
+                  >
+                    <Repeat size={16} />
+                  </button>
+                </td>
+                <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
+                  <button 
+                    onClick={() => onStatusChange(item.id, 'lowStock', !item.lowStock)}
+                    className="focus:outline-none"
+                  >
+                    {item.lowStock ? <CheckSquare className="text-red-500" size={16} /> : <Square size={16} />}
+                  </button>
+                  {item.lowStockTime && (
+                    <div className="text-xs text-gray-500">{formatDate(item.lowStockTime)}</div>
+                  )}
+                </td>
+                <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
+                  <button 
+                    onClick={() => onStatusChange(item.id, 'orderPlaced', !item.orderPlaced)}
+                    className="focus:outline-none"
+                  >
+                    {item.orderPlaced ? <CheckSquare className="text-green-500" size={16} /> : <Square size={16} />}
+                  </button>
+                  {item.orderPlacedTime && (
+                    <div className="text-xs text-gray-500">{formatDate(item.orderPlacedTime)}</div>
+                  )}
+                </td>
+                <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
+                  <button 
+                    onClick={() => onDeleteItem(item.id)} 
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 });

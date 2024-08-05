@@ -1,5 +1,3 @@
-// InventoryLayout.tsx
-
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -29,7 +27,7 @@ const convertToStorageLocation = (location: ItemLocation): StorageLocation => {
 };
 
 const InventoryLayout: React.FC = () => {
-  const { items: initialItems, isLoading, updateItems } = useInventory();
+  const { items: initialItems, isLoading, updateItems, swapLocations } = useInventory();
   const [items, setItems] = useState<Item[]>([]);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -58,6 +56,11 @@ const InventoryLayout: React.FC = () => {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleRefresh = useCallback(() => {
+    setItems(initialItems);
+    setDisplayedItems(initialItems);
+  }, [initialItems]);
 
   const handleSectionClick = useCallback((section: string) => {
     setSelectedSection(section);
@@ -125,25 +128,31 @@ const InventoryLayout: React.FC = () => {
   }, [items, updateItems]);
 
   const handleSwapLocations = useCallback(async (itemId: string) => {
-    const updatedItems = items.map(item => {
-      if (item.id === itemId) {
-        return {
-          ...item,
-          location: convertToItemLocation(item.storageLocation),
-          storageLocation: convertToStorageLocation(item.location)
-        };
-      }
-      return item;
-    });
-    setItems(updatedItems);
-    setDisplayedItems(updatedItems);
+    const item = items.find(i => i.id === itemId);
+    if (!item) return;
+
+    const newLocation = convertToItemLocation(item.storageLocation);
+    const newStorageLocation = convertToStorageLocation(item.location);
+
+    const updatedItem = {
+      ...item,
+      location: newLocation,
+      storageLocation: newStorageLocation
+    };
+
+    setItems(prev => prev.map(i => i.id === itemId ? updatedItem : i));
+    setDisplayedItems(prev => prev.map(i => i.id === itemId ? updatedItem : i));
+
     try {
-      await updateItems(updatedItems);
+      await swapLocations(itemId, newLocation, newStorageLocation);
     } catch (error) {
       console.error('Error swapping locations:', error);
       alert('위치 교환 중 오류가 발생했습니다.');
+      // 오류 발생 시 원래 상태로 되돌리기
+      setItems(prev => prev.map(i => i.id === itemId ? item : i));
+      setDisplayedItems(prev => prev.map(i => i.id === itemId ? item : i));
     }
-  }, [items, updateItems]);
+  }, [items, swapLocations]);
 
   const updateItemStatus = useCallback(async (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => {
     const updatedItems = items.map(item => {
@@ -295,6 +304,7 @@ const InventoryLayout: React.FC = () => {
             onSwapLocations={handleSwapLocations}
             onUpdateMemo={handleUpdateMemo}
             locations={locations}
+            onRefresh={handleRefresh}
           />
         </div>
       </div>
