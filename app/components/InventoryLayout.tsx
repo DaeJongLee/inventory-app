@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useInventory } from '../hooks/useInventory';
-import { Search, PlusCircle } from 'lucide-react';
+import { Search, PlusCircle, Menu } from 'lucide-react';
 import { Item, ItemLocation, StorageLocation } from '../types/types';
 import LocationChangeModal from './LocationChangeModal';
 import AddItemModal from './AddItemModal';
@@ -39,11 +39,23 @@ const InventoryLayout: React.FC = () => {
   const [showInventoryLayout, setShowInventoryLayout] = useState(false);
   const [showLowStockItems, setShowLowStockItems] = useState(false);
   const [showOrderPlacedItems, setShowOrderPlacedItems] = useState(false);
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 
   useEffect(() => {
     setItems(initialItems);
     setDisplayedItems(initialItems);
   }, [initialItems]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTablet(window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSectionClick = useCallback((section: string) => {
     setSelectedSection(section);
@@ -185,31 +197,44 @@ const InventoryLayout: React.FC = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gray-50">
+    <div className="max-w-7xl mx-auto p-6 bg-gray-50 relative">
       <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">재고 관리 보고서</h1>
-      <div className="mb-4">
+      
+      <div className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setShowInventoryLayout(!showInventoryLayout)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center"
         >
+          <Menu className="mr-2" size={20} />
           {showInventoryLayout ? '재고 위치 숨기기' : '재고 위치 보기'}
         </button>
       </div>
+  
       {showInventoryLayout && (
-        <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 위치</h2>
-          
-<InventoryLayoutMain 
-  visibleSections={{
-    preparation: true,
-    sales: true,
-    storage: true
-  }}
-  handleSectionClick={handleSectionClick}
-  highlightedLocation={highlightedLocation}
-/>
-        </div>
+        <div className={`fixed inset-0 bg-black bg-opacity-50 z-40 ${showInventoryLayout ? '' : 'hidden'}`} onClick={() => setShowInventoryLayout(false)}></div>
       )}
+  
+      <div className={`fixed bg-white shadow-lg transition-all duration-300 ease-in-out z-50 ${
+        showInventoryLayout ? 'opacity-100 visible' : 'opacity-0 invisible'
+      } ${
+        isMobileOrTablet 
+          ? 'top-1/3 left-1/3 w-1/3 h-1/3' 
+          : 'top-1/3 left-0 w-1/3 h-1/3'
+      }`}>
+        <div className="p-6 h-full overflow-y-auto">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700">재고 위치</h2>
+          <InventoryLayoutMain 
+            visibleSections={{
+              preparation: true,
+              sales: true,
+              storage: true
+            }}
+            handleSectionClick={handleSectionClick}
+            highlightedLocation={highlightedLocation}
+          />
+        </div>
+      </div>
+  
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
@@ -278,5 +303,4 @@ const InventoryLayout: React.FC = () => {
     </div>
   );
 }
-
 export default InventoryLayout;
