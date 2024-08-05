@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useInventory } from '../hooks/useInventory';
 import { Search, PlusCircle, Menu } from 'lucide-react';
 import { Item, ItemLocation, StorageLocation } from '../types/types';
@@ -40,6 +40,8 @@ const InventoryLayout: React.FC = () => {
   const [showLowStockItems, setShowLowStockItems] = useState(false);
   const [showOrderPlacedItems, setShowOrderPlacedItems] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [sortColumn, setSortColumn] = useState<keyof Item>('name');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     setItems(initialItems);
@@ -216,7 +218,26 @@ const InventoryLayout: React.FC = () => {
     }
   }, [items, updateItems]);
 
-  const filteredItems = displayedItems.filter(item => 
+  const handleSort = useCallback((column: keyof Item) => {
+    setSortColumn(column);
+    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+  }, []);
+
+  const sortedItems = useMemo(() => {
+    return [...displayedItems].sort((a, b) => {
+      if (sortColumn === 'lowStockTime' || sortColumn === 'orderPlacedTime') {
+        const aTime = a[sortColumn] ? new Date(a[sortColumn] as string).getTime() : 0;
+        const bTime = b[sortColumn] ? new Date(b[sortColumn] as string).getTime() : 0;
+        return sortDirection === 'asc' ? aTime - bTime : bTime - aTime;
+      }
+
+      if (a[sortColumn] < b[sortColumn]) return sortDirection === 'asc' ? -1 : 1;
+      if (a[sortColumn] > b[sortColumn]) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [displayedItems, sortColumn, sortDirection]);
+
+  const filteredItems = sortedItems.filter(item => 
     (!showLowStockItems || item.lowStock) &&
     (!showOrderPlacedItems || item.orderPlaced)
   );
@@ -305,6 +326,9 @@ const InventoryLayout: React.FC = () => {
             onUpdateMemo={handleUpdateMemo}
             locations={locations}
             onRefresh={handleRefresh}
+            onSort={handleSort}
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
           />
         </div>
       </div>

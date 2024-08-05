@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Item, ItemLocation, StorageLocation, Location } from '../types/types';
-import { Edit, Trash2, CheckSquare, Square, Repeat, MessageSquare, RefreshCw } from 'lucide-react';
+import { Edit, Trash2, CheckSquare, Square, Repeat, MessageSquare, RefreshCw, ArrowUp, ArrowDown } from 'lucide-react';
 
 interface InventoryTableProps {
   items: Item[];
@@ -11,6 +11,9 @@ interface InventoryTableProps {
   onUpdateMemo: (itemId: string, memo: string) => void;
   locations: Location[];
   onRefresh: () => void;
+  onSort: (column: keyof Item) => void;
+  sortColumn: keyof Item;
+  sortDirection: 'asc' | 'desc';
 }
 
 const InventoryTable: React.FC<InventoryTableProps> = React.memo(({ 
@@ -21,7 +24,10 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
   onSwapLocations,
   onUpdateMemo,
   locations,
-  onRefresh
+  onRefresh,
+  onSort,
+  sortColumn,
+  sortDirection
 }) => {
   const [editingMemo, setEditingMemo] = useState<string | null>(null);
   const [memoText, setMemoText] = useState("");
@@ -69,6 +75,11 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
     setEditingMemo(null);
   };
 
+  const renderSortIcon = (column: keyof Item) => {
+    if (sortColumn !== column) return null;
+    return sortDirection === 'asc' ? <ArrowUp size={14} /> : <ArrowDown size={14} />;
+  };
+
   return (
     <div>
       <div className="mb-4">
@@ -84,14 +95,22 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
         <table className="w-full bg-white table-auto">
           <thead className="bg-gray-100">
             <tr className="text-xs sm:text-sm md:text-base">
-              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">메모</th>
-              <th className="py-2 px-1 sm:px-2 md:px-4 text-left">이름</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center cursor-pointer" onClick={() => onSort('memo')}>
+                메모 {renderSortIcon('memo')}
+              </th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-left cursor-pointer" onClick={() => onSort('name')}>
+                이름 {renderSortIcon('name')}
+              </th>
               <th className="py-2 px-1 sm:px-2 md:px-4 text-left">판매 위치</th>
               <th className="py-2 px-1 sm:px-2 md:px-4 text-left">보관 위치</th>
               <th className="py-2 px-1 sm:px-2 md:px-4 text-center">위치 변경</th>
               <th className="py-2 px-1 sm:px-2 md:px-4 text-center">위치 교환</th>
-              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">재고 부족</th>
-              <th className="py-2 px-1 sm:px-2 md:px-4 text-center">주문 완료</th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center cursor-pointer" onClick={() => onSort('lowStockTime')}>
+                재고 부족 {renderSortIcon('lowStockTime')}
+              </th>
+              <th className="py-2 px-1 sm:px-2 md:px-4 text-center cursor-pointer" onClick={() => onSort('orderPlacedTime')}>
+                주문 완료 {renderSortIcon('orderPlacedTime')}
+              </th>
               <th className="py-2 px-1 sm:px-2 md:px-4 text-center">삭제</th>
             </tr>
           </thead>
