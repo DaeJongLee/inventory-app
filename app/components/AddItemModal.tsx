@@ -25,6 +25,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
   const [similarItems, setSimilarItems] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<ItemLocation>({ main: '', sub: '', final: '' });
   const [selectedStorageLocation, setSelectedStorageLocation] = useState<StorageLocation>({ storageMain: '', storageSub: '', storageFinal: '' });
+  const [memo, setMemo] = useState(''); // 새로 추가된 memo state
 
   useEffect(() => {
     if (itemName.length > 1) {
@@ -80,6 +81,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
         orderPlaced: false,
         lowStockTime: null,
         orderPlacedTime: null,
+        memo: memo, // 새로 추가된 memo 필드
       };
 
       const docRef = await addDoc(collection(db, 'items'), newItem);
@@ -193,6 +195,17 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
                 {renderLocationButtons('storageFinal', getFinalLocations(selectedStorageLocation.storageMain, selectedStorageLocation.storageSub), selectedStorageLocation.storageFinal, (value) => handleStorageLocationSelect('storageFinal', value))}
               </div>
             )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="memo" className="block text-sm font-medium text-gray-700">메모</label>
+            <textarea
+              id="memo"
+              value={memo}
+              onChange={(e) => setMemo(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              rows={3}
+              placeholder="메모 입력"
+            ></textarea>
           </div>
           <div className="flex justify-end">
             <button
