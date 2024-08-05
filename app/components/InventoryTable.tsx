@@ -74,6 +74,7 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
       <table className="w-full bg-white table-auto">
         <thead className="bg-gray-100">
           <tr className="text-xs sm:text-sm md:text-base">
+            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">메모</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-left">이름</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-left">판매 위치</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-left">보관 위치</th>
@@ -82,7 +83,6 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
             <th className="py-2 px-1 sm:px-2 md:px-4 text-center">재고 부족</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-center">주문 완료</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-center">삭제</th>
-            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">메모</th>
           </tr>
         </thead>
         <tbody>
