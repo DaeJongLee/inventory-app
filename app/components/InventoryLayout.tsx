@@ -1,3 +1,5 @@
+// InventoryLayout.tsx
+
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -191,6 +193,20 @@ const InventoryLayout: React.FC = () => {
     }
   }, [items, updateItems]);
 
+  const handleUpdateMemo = useCallback(async (itemId: string, newMemo: string) => {
+    const updatedItems = items.map(item => 
+      item.id === itemId ? { ...item, memo: newMemo } : item
+    );
+    setItems(updatedItems);
+    setDisplayedItems(updatedItems);
+    try {
+      await updateItems(updatedItems);
+    } catch (error) {
+      console.error('Error updating memo:', error);
+      alert('메모 업데이트 중 오류가 발생했습니다.');
+    }
+  }, [items, updateItems]);
+
   const filteredItems = displayedItems.filter(item => 
     (!showLowStockItems || item.lowStock) &&
     (!showOrderPlacedItems || item.orderPlaced)
@@ -209,11 +225,11 @@ const InventoryLayout: React.FC = () => {
           {showInventoryLayout ? '재고 위치 숨기기' : '재고 위치 보기'}
         </button>
       </div>
-  
+
       {showInventoryLayout && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowInventoryLayout(false)}></div>
       )}
-  
+
       <div className={`fixed top-0 left-0 h-full w-1/3 bg-white shadow-lg transition-all duration-300 ease-in-out z-50 overflow-y-auto ${
         showInventoryLayout ? 'translate-x-0' : '-translate-x-full'
       }`}>
@@ -230,7 +246,7 @@ const InventoryLayout: React.FC = () => {
           />
         </div>
       </div>
-  
+
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-gray-700">아이템 목록</h2>
@@ -277,6 +293,7 @@ const InventoryLayout: React.FC = () => {
             onUpdateLocation={handleUpdateLocation}
             onDeleteItem={handleDeleteItem}
             onSwapLocations={handleSwapLocations}
+            onUpdateMemo={handleUpdateMemo}
             locations={locations}
           />
         </div>
@@ -301,4 +318,5 @@ const InventoryLayout: React.FC = () => {
     </div>
   );
 }
+
 export default InventoryLayout;

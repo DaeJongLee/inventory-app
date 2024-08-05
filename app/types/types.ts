@@ -25,4 +25,5 @@ export interface Item {
   orderPlaced: boolean;
   lowStockTime: string | null;
   orderPlacedTime: string | null;
+  memo: string; // 새로 추가된 메모 필드
 }

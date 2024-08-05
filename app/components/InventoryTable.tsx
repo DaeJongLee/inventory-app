@@ -1,6 +1,8 @@
-import React from 'react';
+// InventoryTable.tsx
+
+import React, { useState } from 'react';
 import { Item, ItemLocation, StorageLocation, Location } from '../types/types';
-import { Edit, Trash2, CheckSquare, Square, Repeat } from 'lucide-react';
+import { Edit, Trash2, CheckSquare, Square, Repeat, MessageSquare } from 'lucide-react';
 
 interface InventoryTableProps {
   items: Item[];
@@ -8,6 +10,7 @@ interface InventoryTableProps {
   onDeleteItem: (itemId: string) => void;
   onStatusChange: (itemId: string, status: 'lowStock' | 'orderPlaced', value: boolean) => void;
   onSwapLocations: (itemId: string) => void;
+  onUpdateMemo: (itemId: string, memo: string) => void;
   locations: Location[];
 }
 
@@ -17,8 +20,12 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
   onDeleteItem,
   onStatusChange,
   onSwapLocations,
+  onUpdateMemo,
   locations
 }) => {
+  const [editingMemo, setEditingMemo] = useState<string | null>(null);
+  const [memoText, setMemoText] = useState("");
+
   const getLocationName = (location: ItemLocation | StorageLocation) => {
     const findLocationName = (locations: Location[], id: string): string | undefined => {
       for (const loc of locations) {
@@ -52,6 +59,16 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
     return `${String(d.getFullYear()).slice(-2)}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}-${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
   };
 
+  const handleMemoClick = (itemId: string, currentMemo: string) => {
+    setEditingMemo(itemId);
+    setMemoText(currentMemo);
+  };
+
+  const handleMemoSave = (itemId: string) => {
+    onUpdateMemo(itemId, memoText);
+    setEditingMemo(null);
+  };
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full bg-white table-auto">
@@ -65,6 +82,7 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
             <th className="py-2 px-1 sm:px-2 md:px-4 text-center">재고 부족</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-center">주문 완료</th>
             <th className="py-2 px-1 sm:px-2 md:px-4 text-center">삭제</th>
+            <th className="py-2 px-1 sm:px-2 md:px-4 text-center">메모</th>
           </tr>
         </thead>
         <tbody>
@@ -118,6 +136,32 @@ const InventoryTable: React.FC<InventoryTableProps> = React.memo(({
                 >
                   <Trash2 size={16} />
                 </button>
+              </td>
+              <td className="py-2 px-1 sm:px-2 md:px-4 text-center">
+                {editingMemo === item.id ? (
+                  <div>
+                    <input 
+                      type="text" 
+                      value={memoText} 
+                      onChange={(e) => setMemoText(e.target.value)}
+                      className="border rounded px-2 py-1 w-full"
+                    />
+                    <button 
+                      onClick={() => handleMemoSave(item.id)}
+                      className="bg-blue-500 text-white px-2 py-1 rounded mt-1"
+                    >
+                      저장
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => handleMemoClick(item.id, item.memo)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    <MessageSquare size={16} />
+                    {item.memo && <span className="ml-1">{item.memo.substring(0, 10)}...</span>}
+                  </button>
+                )}
               </td>
             </tr>
           ))}
